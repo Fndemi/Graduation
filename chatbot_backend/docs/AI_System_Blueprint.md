@@ -1,5 +1,7 @@
 # 🤖 Luxe GenAI System Architecture
-This blueprint outlines the full AI system architecture for the LUXE e‑commerce chatbot, showing the flow of a user's request from the frontend to the final response, integrating all required components.
+
+This blueprint outlines the full AI system architecture for the LUXE e-commerce chatbot, showing the flow of a user's request from the frontend to the final response, integrating all required components.
+
 ## 1. High-Level Components
 
 * **FastAPI Chat Service** – entry point for all user queries (`/chat` endpoint).
@@ -20,11 +22,11 @@ flowchart TB
 
     API --> RT[Router]
 
-    RT -->|Simple (FAQ/Product)| LC[LangChain Agent]
-    RT -->|Complex (Multi-step)| CR[CrewAI Orchestrator]
+    RT -->|Simple FAQ Product| LC[LangChain Agent]
+    RT -->|Complex Multi-step| CR[CrewAI Orchestrator]
 
     LC --> VDB[(Vector DB - Product Embeddings)]
-    LC --> FAQ[Knowledge Base (Home Decor FAQs)]
+    LC --> FAQ[Knowledge Base - Home Decor FAQs]
 
     CR --> SA[Style Advisor Agent]
     CR --> OTA[Order Tracking Agent]
@@ -32,7 +34,7 @@ flowchart TB
 
     OTA --> ORDAPI[E-commerce Order API]
     OTA --> SHIP[Shipping API]
-    RA --> N8N[n8n Workflow (Returns + Emails)]
+    RA --> N8N[n8n Workflow - Returns and Emails]
     SA --> VDB
 ```
 
@@ -41,17 +43,14 @@ flowchart TB
 ## 3. CrewAI Agents & Roles
 
 * **Style Advisor Agent**
-
-  * Suggests products that match user’s room, mood board, or dimensions.
+  * Suggests products that match user's room, mood board, or dimensions.
   * Uses vector DB + product metadata.
 
 * **Order Tracking Agent**
-
   * Fetches order + shipping status.
   * Calls: `get_order_status(order_id)`.
 
 * **Returns Agent**
-
   * Starts a return process.
   * Calls: `initiate_return(order_id)` via n8n automation.
 
@@ -78,23 +77,19 @@ def initiate_return(order_id: str) -> str
 ## 5. Data Flow Examples
 
 1. **FAQ Question**
-
-   * User: “How do I clean velvet?”
+   * User: "How do I clean velvet?"
    * Router → LangChain Agent → Knowledge Base → Returns FAQ Answer.
 
 2. **Product Search**
-
-   * User: “Show me round wooden coffee tables.”
+   * User: "Show me round wooden coffee tables."
    * LangChain Agent → `search_products()` → Vector DB → Suggests items.
 
 3. **Order Tracking**
-
-   * User: “Where’s my order #9876?”
+   * User: "Where's my order #9876?"
    * Router → CrewAI Orchestrator → OrderTrackingAgent → E-commerce API + Shipping API → Returns formatted response.
 
 4. **Return Request**
-
-   * User: “I want to return my chair.”
+   * User: "I want to return my chair."
    * Router → CrewAI Orchestrator → ReturnsAgent → `initiate_return()` → n8n triggers → User gets email + return label.
 
 ---

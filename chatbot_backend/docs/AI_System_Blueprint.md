@@ -1,5 +1,5 @@
 # 🤖 Luxe GenAI System Architecture
-
+This blueprint outlines the full AI system architecture for the LUXE e‑commerce chatbot, showing the flow of a user's request from the frontend to the final response, integrating all required components.
 ## 1. High-Level Components
 
 * **FastAPI Chat Service** – entry point for all user queries (`/chat` endpoint).

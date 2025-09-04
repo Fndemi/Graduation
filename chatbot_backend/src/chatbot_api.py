@@ -1,56 +1,25 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, status
 from pydantic import BaseModel
-import uvicorn
+from typing import Dict
 
-# Initialize the FastAPI app
-app = FastAPI(
-    title="E-Commerce AI Chatbot",
-    description="Welcome to our AI-powered customer service chatbot! 🤖",
-    version="1.0.0"
-)
+router = APIRouter(tags=["Chatbot"])
 
 class ChatRequest(BaseModel):
-    """
-    A Pydantic model for the incoming chat request body.
-    """
-    text: str
+    message: str
 
-@app.get("/", status_code=200)
-def welcome():
-    """
-    Friendly welcome message for the root endpoint.
-    """
-    return {
-        "message": "🎉 Welcome to the E-Commerce AI Chatbot API!",
-        "description": "Your intelligent shopping assistant is ready to help with orders, product searches, and customer support.",
-        "status": "ready to chat! 💬"
-    }
-
-@app.get("/health", status_code=200, tags=["healthcheck"])
+@router.get("/health", status_code=status.HTTP_200_OK, response_model=Dict[str, str])
 def health_check():
     """
-    Endpoint to check the health of the API.
-    Returns a simple JSON response to indicate the service is running.
+    Performs a health check on the chatbot API.
     """
-    return {"status": "healthy", "message": "Chatbot API is up and running! ✅"}
+    return {"status": "ok"}
 
-@app.post("/chat", status_code=200, tags=["chatbot"])
-def chat(request: ChatRequest):
+@router.post("/query", status_code=status.HTTP_200_OK, response_model=Dict[str, str])
+def chat_query(request: ChatRequest):
     """
-    Simple chatbot endpoint with a friendly response.
-    This will be enhanced in future iterations.
+    Processes a user query and returns a response from the GenAI agent.
+    
+    NOTE: This endpoint is currently a placeholder and will be connected to
+    the LangChain/CrewAI agent in the next milestone.
     """
-    return {
-        "response": f"Hello! I received your message: '{request.text}' 😊",
-        "message": "I'm your AI shopping assistant! I'll be getting smarter soon to help you with orders, product searches, and more!",
-        "status": "message received"
-    }
-
-
-if __name__ == "__main__":
-    uvicorn.run(
-        "chatbot_api:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True
-    )
+    return {"response": f"Received your query: {request.message}. Processing... (Milestone 2 will add the agent logic)"}

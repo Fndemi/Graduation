@@ -1,338 +1,95 @@
-# AI System Blueprint
+# 🤖 Luxe GenAI System Architecture
 
-This blueprint outlines the full AI system architecture for the e-commerce chatbot, showing the flow of a user's request from the frontend to the final response, integrating all required components.
+This blueprint outlines the full AI system architecture for the LUXE e-commerce chatbot, showing the flow of a user's request from the frontend to the final response, integrating all required components.
+
+## 1. High-Level Components
+
+* **FastAPI Chat Service** – entry point for all user queries (`/chat` endpoint).
+* **Router** – decides between simple FAQ vs. complex multi-step queries.
+* **LangChain Agent** – handles simple tasks (FAQs, product search).
+* **CrewAI Orchestrator** – coordinates multi-agent workflows.
+* **Specialized Agents** – each agent is focused on a domain (style, orders, returns).
+* **MCP Tools** – standardized APIs that connect AI → real data/services.
+* **Vector Database (RAG)** – powers semantic search for products & FAQs.
 
 ---
 
-## 1) AI System Architecture Diagram
-
-### 1.1 Conceptual Flow (Mermaid)
+## 2. GenAI Flow Diagram
 
 ```mermaid
-flowchart LR
-    U[User on Web/Mobile UI] -->|Types query| FE[Frontend]
-    FE -->|REST/JSON POST /chat| API[FastAPI Backend]
-    API -->|Intent + Complexity Routing| RT{Router}
+flowchart TB
+    U[User Query] --> API[FastAPI /chat Endpoint]
 
-    RT -->|Simple/FAQ/Product Qs| LC[LangChain Agent]
-    RT -->|Complex Multi-Step| CR[CrewAI Orchestrator]
+    API --> RT[Router]
 
-    subgraph Agents
-      LC --> T[MCP Tools Layer]
-      CR --> A1[OrderTrackingAgent]
-      CR --> A2[CustomerServiceAgent]
-      CR --> A3[ReturnsAgent]
-      A1 --> T
-      A3 --> T
-    end
+    RT -->|Simple FAQ Product| LC[LangChain Agent]
+    RT -->|Complex Multi-step| CR[CrewAI Orchestrator]
 
-    subgraph Tools[MCP Tools]
-      T --> PS[ProductSearchTool]
-      T --> OT[OrderTrackingTool]
-      T --> AC[AddToCartTool]
-      T --> IR[InitiateReturnTool]
-    end
+    LC --> VDB[(Vector DB - Product Embeddings)]
+    LC --> FAQ[Knowledge Base - Home Decor FAQs]
 
-    subgraph External[External Services]
-      PS --> VDB[Vector DB / RAG embeddings]
-      OT --> ECOM[E-commerce API]
-      ECOM --> SHIP[3rd-party Shipping API]
-      AC --> ECOM
-      IR --> N8N[n8n Workflow]
-    end
+    CR --> SA[Style Advisor Agent]
+    CR --> OTA[Order Tracking Agent]
+    CR --> RA[Returns Agent]
 
-    LC -->|Response JSON| API
-    CR -->|Final message JSON| API
-    API --> FE
-    FE -->|Rendered chat + rich cards| U
-```
-
-### 1.2 Alternate ASCII Diagram
-
-```
-User → Frontend(UI) → FastAPI(/chat)
-                  ↘ Router ↙
-     ┌─────────────┴─────────────┐
-     │                           │
-LangChain Agent            CrewAI Orchestrator
-   │  │                        │   │   │
-   │  └─(MCP Tools)────────────┘   │   └─► ReturnsAgent ──(InitiateReturnTool)──► n8n
-   │                                └─► CustomerServiceAgent (no external tools)
-   └─► ProductSearchTool ─► Vector DB
-       AddToCartTool ─────► E-commerce API
-       OrderTrackingTool ─► E-commerce API ─► Shipping API
+    OTA --> ORDAPI[E-commerce Order API]
+    OTA --> SHIP[Shipping API]
+    RA --> N8N[n8n Workflow - Returns and Emails]
+    SA --> VDB
 ```
 
 ---
 
-## 2) CrewAI Agent Roles & Responsibilities
+## 3. CrewAI Agents & Roles
 
-### 2.1 OrderTrackingAgent
+* **Style Advisor Agent**
+  * Suggests products that match user's room, mood board, or dimensions.
+  * Uses vector DB + product metadata.
 
-* **Responsibility:** Logistics expert; finds and interprets shipping info.
-* **Primary Task:** `Find the current status of order [order_number].`
-* **Tool Usage:** Exclusively uses `get_order_status` (OrderTrackingTool).
-* **Inputs:** `order_number`, optional `user_id` for permission checks.
-* **Outputs:** Normalized `order_status_data` (carrier, last_update, ETA, events[]).
+* **Order Tracking Agent**
+  * Fetches order + shipping status.
+  * Calls: `get_order_status(order_id)`.
 
-### 2.2 CustomerServiceAgent
-
-* **Responsibility:** Communication expert; formats friendly, brand-aligned replies.
-* **Primary Task:** `Format the [order_status_data] into a clear and friendly message for the user.`
-* **Tool Usage:** None (pure reasoning + templating).
-* **Inputs:** `order_status_data`, conversation context, tone/style guide.
-* **Outputs:** Final message with optional UI hints (e.g., status badge, timeline).
-
-### 2.3 ReturnsAgent
-
-* **Responsibility:** Returns specialist; initiates returns and manages logistics.
-* **Primary Task:** `Initiate a return for order [order_number] and generate a return label.`
-* **Tool Usage:** Uses `initiate_return` (InitiateReturnTool → triggers n8n).
-* **Inputs:** `order_id`, line items to return, reason codes, pickup/label preference.
-* **Outputs:** Return RMA id, label/link, next steps for the user.
+* **Returns Agent**
+  * Starts a return process.
+  * Calls: `initiate_return(order_id)` via n8n automation.
 
 ---
 
-## 3) MCP (Model Context Protocol) Tool Architecture
+## 4. MCP Tool Contracts
 
-The MCP layer standardizes how agents call backend functions. Each tool exposes a clear, typed interface that maps directly to FastAPI endpoints.
+```python
+# Product Search
+def search_products(query: str) -> List[Dict]
 
-### 3.1 ProductSearchTool
+# Order Tracking
+def get_order_status(order_id: str) -> Dict
 
-* **Description:** Searches the product database for items that match the user's query via semantic similarity.
-* **Function Signature (Agent-side):** `def search_products(query: str, top_k: int = 8) -> List[Dict]`
-* **Backend Call (FastAPI):** `POST /tools/product_search` → queries Vector DB (FAISS/Pinecone/Weaviate) with text/image embeddings.
-* **Return Shape:**
+# Add to Cart
+def add_to_cart(product_id: str, quantity: int) -> str
 
-```json
-{
-  "results": [
-    {
-      "product_id": "p123",
-      "title": "Black Sneakers",
-      "score": 0.84,
-      "price": 5999,
-      "currency": "KES",
-      "image": "https://...",
-      "url": "/product/p123"
-    }
-  ]
-}
-```
-
-### 3.2 OrderTrackingTool
-
-* **Description:** Retrieves real-time shipping status for a given order number.
-* **Function Signature (Agent-side):** `def get_order_status(order_number: str) -> Dict`
-* **Backend Call (FastAPI):** `GET /tools/order_status/{order_number}` → calls E-commerce API `/api/orders/{order_number}/status` → may query carrier API.
-* **Return Shape:**
-
-```json
-{
-  "order_number": "A10045",
-  "carrier": "DHL",
-  "status": "In Transit",
-  "eta": "2025-09-06",
-  "last_update": "2025-09-03T12:30:00Z",
-  "events": [
-    {
-      "time": "2025-09-02T08:00:00Z",
-      "location": "Nairobi HUB",
-      "description": "Departed facility"
-    }
-  ]
-}
-```
-
-### 3.3 AddToCartTool
-
-* **Description:** Adds a specific product to the user's shopping cart.
-* **Function Signature (Agent-side):** `def add_to_cart(product_id: str, quantity: int, user_id: str) -> str`
-* **Backend Call (FastAPI):** `POST /tools/add_to_cart` → forwards to E-commerce API `/api/cart/add`.
-* **Return Shape:** 
-
-```json
-{
-  "message": "Added to cart",
-  "cart_id": "c789",
-  "line_item_id": "li222"
-}
-```
-
-### 3.4 InitiateReturnTool
-
-* **Description:** Starts a return process and sends confirmation email via n8n.
-* **Function Signature (Agent-side):** `def initiate_return(order_id: str, items: List[Dict], reason: str) -> str`
-* **Backend Call (FastAPI):** `POST /tools/initiate_return` → triggers n8n webhook (automation for RMA + email).
-* **Return Shape:** 
-
-```json
-{
-  "rma_id": "RMA-5542",
-  "label_url": "https://.../label.pdf"
-}
+# Returns
+def initiate_return(order_id: str) -> str
 ```
 
 ---
 
-## 4) FastAPI Contracts (for Frontend & Tools)
+## 5. Data Flow Examples
 
-### 4.1 Chat Inference Endpoint (Frontend → FastAPI)
+1. **FAQ Question**
+   * User: "How do I clean velvet?"
+   * Router → LangChain Agent → Knowledge Base → Returns FAQ Answer.
 
-* **Path:** `POST /chat`
-* **Request:**
+2. **Product Search**
+   * User: "Show me round wooden coffee tables."
+   * LangChain Agent → `search_products()` → Vector DB → Suggests items.
 
-```json
-{
-  "user_id": "u123",
-  "message": "Where is my order A10045?",
-  "attachments": [],
-  "session_id": "s456",
-  "ui_capabilities": {
-    "supports_cards": true,
-    "supports_buttons": true
-  }
-}
-```
+3. **Order Tracking**
+   * User: "Where's my order #9876?"
+   * Router → CrewAI Orchestrator → OrderTrackingAgent → E-commerce API + Shipping API → Returns formatted response.
 
-* **Behavior:**
-  * Router computes intent & complexity (e.g., via lightweight classifier or prompt-based decision).
-  * Routes to LangChain Agent (simple) or CrewAI Orchestrator (complex).
-
-* **Response (unified):**
-
-```json
-{
-  "type": "chat_message",
-  "text": "Your order A10045 is in transit with DHL. ETA: Sep 6.",
-  "rich": {
-    "status_badge": "in_transit",
-    "timeline": [
-      {
-        "time": "2025-09-02T08:00:00Z",
-        "label": "Departed Nairobi HUB"
-      }
-    ]
-  },
-  "suggested_replies": ["Track another order", "Return an item"],
-  "source": "CrewAI"
-}
-```
-
-### 4.2 Tool Endpoints (Agents → FastAPI)
-
-* `POST /tools/product_search { query, top_k }`
-* `GET /tools/order_status/{order_number}`
-* `POST /tools/add_to_cart { user_id, product_id, quantity }`
-* `POST /tools/initiate_return { order_id, items[], reason }`
-
-> **Auth:** All tool routes require service auth (e.g., JWT with service role) + user scoping where needed.
+4. **Return Request**
+   * User: "I want to return my chair."
+   * Router → CrewAI Orchestrator → ReturnsAgent → `initiate_return()` → n8n triggers → User gets email + return label.
 
 ---
-
-## 5) RAG & Embeddings Layer (for ProductSearchTool)
-
-* **Embeddings:** Use text (title, description, category, attributes) and optional image embeddings (CLIP) → store in Vector DB with metadata.
-* **Schema Example:**
-
-```json
-{
-  "id": "p123",
-  "embedding": "[ ... ]",
-  "metadata": {
-    "title": "Black Sneakers",
-    "price": 5999,
-    "currency": "KES",
-    "brand": "Acme",
-    "category": "Shoes",
-    "image": "https://...",
-    "url": "/product/p123"
-  }
-}
-```
-
-* **Retrieval:** Hybrid search (keyword + vector). Top-k results passed to LLM as context for conversational answers or product carousels.
-
----
-
-## 6) Orchestration Logic
-
-### 6.1 Routing Heuristics
-
-* **Simple/LangChain:** FAQs, store policies, generic product discovery, sizing guidance.
-* **Complex/CrewAI:** WISMO (Where Is My Order), returns/exchanges, multi-step flows (verify user → fetch status → format response).
-
-### 6.2 CrewAI Playbooks
-
-* **Order Tracking Playbook:**
-  1. OrderTrackingAgent → `get_order_status` with `order_number`.
-  2. CustomerServiceAgent → format `order_status_data` with tone guide.
-
-* **Returns Playbook:**
-  1. ReturnsAgent → `initiate_return` with selected items & reason.
-  2. CustomerServiceAgent → confirm RMA, label, and next steps.
-
----
-
-## 7) Security & Compliance
-
-* **AuthN/Z:**
-  * Frontend → FastAPI: user JWT (issued by your auth provider).
-  * Agents → Tool routes: service JWT + RBAC; verify `user_id` scope where needed.
-* **PII Handling:** Minimize in prompts; mask email/phone; never log raw PII.
-* **Secrets:** Store API keys in vault/ENV (`ECOM_API_KEY`, `VDB_URL`, `N8N_WEBHOOK_URL`).
-* **Rate Limiting:** Per user/session and per tool to prevent abuse.
-
----
-
-## 8) Observability & Evaluation
-
-* **Tracing:** Use OpenTelemetry to trace request → router → agents → tools → externals.
-* **Structured Logs:** Include `session_id`, `user_id`, latency per tool call, token usage.
-* **Quality:** Log user feedback thumbs-up/down; maintain eval dataset for regression tests.
-
----
-
-## 9) Error Handling Patterns
-
-* **Tool Failures:** Return graceful fallbacks ("We're having trouble contacting the carrier"), suggest human handoff.
-* **Timeouts/Backoffs:** Exponential backoff on external APIs; circuit breaker for carriers.
-* **Validation:** Strict request schemas; sanitize tool inputs.
-
----
-
-## 10) Example Prompts (Summarized)
-
-* **LangChain System Prompt:**
-  * Role: Helpful e-commerce assistant.
-  * Tools: product_search, add_to_cart, order_status, initiate_return (when routed to Crew).
-  * Style: Friendly, concise, localized currency (KES).
-
-* **CustomerServiceAgent Style Guide:**
-  * Voice: Warm, helpful, specific; avoid generic filler; include concrete dates.
-
----
-
-## 11) Deployment Topology
-
-* **Services:** FastAPI (ASGI) + Workers for tool calls; Vector DB managed (Pinecone/Weaviate); n8n hosted; E-commerce API by web team.
-* **Scaling:** Autoscale FastAPI; cache hot product results; CDN for images.
-
----
-
-## 12) Handover Checklist (for Frontend Team)
-
-* `/chat` contract + sample payloads/responses.
-* Rich UI hints (cards, badges, timelines, suggested replies).
-* Error states and retry guidance.
-* Authentication expectations and headers.
-
----
-
-## 13) Next Steps
-
-1. Stand up FastAPI skeleton with `/chat` + tool routes.
-2. Integrate vector DB + embeddings pipeline for products.
-3. Implement routing + LangChain agent.
-4. Add CrewAI crew (OrderTracking, CustomerService, Returns) and wire the MCP tools.
-5. Ship observability + eval harness.

@@ -1,68 +1,22 @@
-#!/usr/bin/env python
-import sys
-import warnings
+from fastapi import FastAPI
+from ..chatbot_api import router as chatbot_router
 
-from datetime import datetime
+# Initialize the FastAPI application
+app = FastAPI(
+    title="Luxe GenAI System",
+    description="A generative AI system for home decor e-commerce.",
+    version="0.1.0",
+)
 
-from chatbot_backend.crew import ChatbotBackend
+# Include the chatbot API router
+app.include_router(chatbot_router, prefix="/chatbot")
 
-warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
-
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
-
-def run():
+@app.get("/", tags=["Root"])
+def read_root():
     """
-    Run the crew.
+    Root endpoint for the API.
     """
-    inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
-    }
-    
-    try:
-        ChatbotBackend().crew().kickoff(inputs=inputs)
-    except Exception as e:
-        raise Exception(f"An error occurred while running the crew: {e}")
-
-
-def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        "topic": "AI LLMs",
-        'current_year': str(datetime.now().year)
-    }
-    try:
-        ChatbotBackend().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
-
-def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
-    try:
-        ChatbotBackend().crew().replay(task_id=sys.argv[1])
-
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
-
-def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        "topic": "AI LLMs",
-        "current_year": str(datetime.now().year)
-    }
-    
-    try:
-        ChatbotBackend().crew().test(n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
+    return {"message": "Welcome to the Luxe GenAI System API. Navigate to /docs for API documentation."}
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -1,0 +1,7 @@
+FastAPI
+uvicorn
+pydantic
+langchain
+google-generativeai
+openai
+python-dotenv

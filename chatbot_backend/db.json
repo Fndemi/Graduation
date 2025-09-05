@@ -1,0 +1,18 @@
+{
+  "orders": [
+    {
+      "id": "12345",
+      "status": "In Transit",
+      "carrier": "FedEx",
+      "tracking_number": "9876543210",
+      "estimated_delivery": "September 15, 2025"
+    },
+    {
+      "id": "67890",
+      "status": "Delivered",
+      "carrier": "UPS",
+      "tracking_number": "1234567890",
+      "estimated_delivery": "September 1, 2025"
+    }
+  ]
+}

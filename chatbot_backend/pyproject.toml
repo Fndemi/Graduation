@@ -5,7 +5,15 @@ description = "chatbot_backend using crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.14"
 dependencies = [
-    "crewai[tools]>=0.177.0,<1.0.0"
+    "crewai[tools]>=0.177.0,<1.0.0",
+    "fastapi",
+    "uvicorn[standard]",
+    "python-dotenv",
+    "pydantic",
+    "pyyaml",
+    "requests",
+    "langchain-openai", # or another provider
+    "qdrant-client"     # or another vector DB client
 ]
 
 [project.scripts]

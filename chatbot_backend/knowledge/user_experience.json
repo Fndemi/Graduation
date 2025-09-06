@@ -1,0 +1,89 @@
+{
+  "user_personas": [
+    {
+      "name": "Emma",
+      "role": "The Homeowner",
+      "demographics": {
+        "gender": "Female",
+        "age": 32,
+        "marital_status": "Married",
+        "children": 0,
+        "residence": "Suburban home",
+        "household_income": "Upper middle class"
+      },
+      "behaviors": [
+        "Takes time making purchase decisions",
+        "Spends time on Instagram and Pinterest for home decor inspiration",
+        "Values quality over quantity",
+        "Researches products extensively for materials, origins, and styling advice"
+      ],
+      "pain_points": [
+        "Frustrated with mass-produced furniture lacking character and quality",
+        "Many e-commerce sites have low-quality images and minimal product details",
+        "Difficulty visualizing items in her space",
+        "Concerns about integrity of small online businesses and unclear return policies"
+      ],
+      "needs": [
+        "Platform with high-quality, detailed product imagery and accurate descriptions",
+        "Reliable and transparent returns process"
+      ]
+    },
+    {
+      "name": "Daniel",
+      "role": "The Design Enthusiast",
+      "demographics": {
+        "gender": "Male",
+        "age": 28,
+        "marital_status": "Single",
+        "residence": "Urban apartment",
+        "income": "Moderate discretionary income"
+      },
+      "behaviors": [
+        "Trend-aware shopper keeping up with interior design trends",
+        "Follows design blogs and magazines",
+        "Likes to 'mix and match' styles",
+        "Seeks specific art or furniture pieces to complete rooms",
+        "Values smooth mobile experience"
+      ],
+      "pain_points": [
+        "Overwhelmed by too many options on large marketplaces",
+        "Difficulty finding curated, high-quality pieces",
+        "Concerns about shipping and delivery, especially for larger items"
+      ],
+      "needs": [
+        "Mobile-friendly platform with curated product selection",
+        "Clear and simple filtering options",
+        "Streamlined checkout process",
+        "Confidence in delivery logistics for large furniture items"
+      ]
+    }
+  ],
+  "user_stories": [
+    {
+      "id": "USER1",
+      "priority": "High",
+      "story": "I want to see high-quality images from multiple angles so that I can be confident the item will look right in my space.",
+      "acceptance_criteria": [
+        "Product detail pages must have a dedicated image gallery",
+        "Image galleries must include zoom functionality"
+      ]
+    },
+    {
+      "id": "USER2",
+      "priority": "High",
+      "story": "I want to easily message customer support to ask about custom options so I can purchase a product tailored to my needs.",
+      "acceptance_criteria": [
+        "A prominent 'Contact Us' or 'Message Support' button is on the product detail page",
+        "Messages are threaded and accessible from the user's dashboard"
+      ]
+    }
+  ],
+  "user_journeys": [
+    "User lands on the Homepage featuring curated products",
+    "Browses a collection and clicks on a coffee table",
+    "Navigates to the Product Detail Page for the table, uses the image zoom",
+    "Sees 'In Stock' to confirm the wood type is available",
+    "Adds the item to the cart and proceeds to checkout",
+    "Enters shipping information, sees the calculated freight shipping cost, pays, and receives confirmation"
+  ]
+}

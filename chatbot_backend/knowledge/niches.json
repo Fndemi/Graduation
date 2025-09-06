@@ -1,0 +1,26 @@
+[
+  {
+    "type": "niche",
+    "name": "Luxury",
+    "description": "High-end, premium products designed for style and comfort.",
+    "categories": ["Living Room", "Bedroom"]
+  },
+  {
+    "type": "niche",
+    "name": "Top Picks",
+    "description": "Best-selling and highly recommended items curated for quality and value.",
+    "categories": ["Living Room", "Kitchen", "Bathroom", "Home Office"]
+  },
+  {
+    "type": "niche",
+    "name": "Top Selling",
+    "description": "Products with the highest sales volume, popular among customers.",
+    "categories": ["Living Room", "Bedroom", "Kitchen"]
+  },
+  {
+    "type": "niche",
+    "name": "Discounted",
+    "description": "Items currently offered at discounted prices for a limited time.",
+    "categories": ["Living Room", "Kitchen", "Bedroom", "Bathroom"]
+  }
+]

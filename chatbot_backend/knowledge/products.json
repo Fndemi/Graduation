@@ -58,5 +58,70 @@
     "type": "faq",
     "question": "What is your return policy?",
     "answer": "30-day return policy for most items. Items must be in new, unused condition with all original packaging. Contact customer service with your order number to initiate a return."
+  },
+
+  {
+    "type": "product",
+    "name": "Luxe Velvet Armchair",
+    "description": "A chic and comfortable armchair upholstered in soft, deep-pile velvet. It features a sturdy wooden frame and elegant brass legs, perfect for adding a touch of modern luxury to any living space. Available in a range of colors including emerald green, sapphire blue, and classic charcoal.",
+    "attributes": {
+      "material": "Velvet",
+      "frame": "Walnut Wood",
+      "legs": "Brass",
+      "dimensions": "34\"W x 36\"D x 32\"H"
+    },
+    "category": "Living Room",
+    "niche": "Armchairs",
+    "price": 13500,
+    "discountPercent": 55,
+    "reviews": [
+      {
+        "name": "Angie",
+        "comment": "Awesome",
+        "rating": 2
+      },
+      {
+        "name": "Ashbel",
+        "comment": "Dragon Moto testing😅",
+        "rating": 3
+      }
+    ]
+  },
+  {
+    "type": "product",
+    "name": "Bohemian Jute & Wool Area Rug",
+    "description": "Hand-woven from a blend of natural jute and soft wool, this area rug brings a warm, earthy texture to your home. Its geometric patterns and neutral tones make it a versatile piece for a living room, bedroom, or entryway.",
+    "attributes": {
+      "material": "70% Jute, 30% Wool",
+      "style": "Bohemian",
+      "dimensions": "8' x 10'"
+    },
+    "category": "Living Room",
+    "niche": "Rugs",
+    "price": 40000,
+    "discountPercent": 20,
+    "reviews": [
+      {
+        "name": "Angie",
+        "comment": "The best of the best",
+        "rating": 5
+      }
+    ]
+  },
+  {
+    "type": "product",
+    "name": "Minimalist Walnut Coffee Table",
+    "description": "A beautifully crafted coffee table made from solid American walnut. Its clean lines and simple design emphasize the natural beauty of the wood grain. Perfect for minimalist or contemporary decor.",
+    "attributes": {
+      "material": "Solid American Walnut",
+      "finish": "Natural Oil",
+      "dimensions": "48\"L x 24\"W x 16\"H"
+    },
+    "category": "Living Room",
+    "niche": "Tables",
+    "price": 27000,
+    "discountPercent": 10,
+    "reviews": []
   }
+
 ]

@@ -1,0 +1,43 @@
+[
+  {
+    "type": "interaction",
+    "user_query": "Can you tell me about the Luxe Velvet Armchair?",
+    "bot_response": "The Luxe Velvet Armchair is a chic and comfortable armchair upholstered in soft, deep-pile velvet. It features a sturdy walnut wood frame with elegant brass legs and is available in colors like emerald green, sapphire blue, and classic charcoal."
+  },
+  {
+    "type": "interaction",
+    "user_query": "How do I clean my Bohemian Jute & Wool Area Rug?",
+    "bot_response": "Vacuum your Bohemian Jute & Wool Rug regularly to remove dust. Blot spills immediately with a clean cloth. For deeper stains, use mild soap and water, testing on a hidden area first. Rotate the rug periodically to ensure even wear."
+  },
+  {
+    "type": "interaction",
+    "user_query": "What are the dimensions of the Minimalist Walnut Coffee Table?",
+    "bot_response": "The Minimalist Walnut Coffee Table measures 48 inches in length, 24 inches in width, and 16 inches in height. It is crafted from solid American walnut with a natural oil finish."
+  },
+  {
+    "type": "interaction",
+    "user_query": "Do you have any tips for maintaining my fridge?",
+    "bot_response": "Yes! Clean the fridge interior regularly with warm water and mild detergent, avoid overloading for proper air circulation, check and replace door seals periodically, and keep the exterior dry to prevent rust or discoloration."
+  },
+  {
+    "type": "interaction",
+    "user_query": "What is your return policy?",
+    "bot_response": "We offer a 30-day return policy for most items. Items must be in new, unused condition with all original packaging. To initiate a return, please contact our customer service team with your order number."
+  },
+  {
+    "type": "interaction",
+    "user_query": "Can you suggest products for a modern living room?",
+    "bot_response": "For a modern living room, consider the Luxe Velvet Armchair for seating, the Minimalist Walnut Coffee Table as a centerpiece, and a Bohemian Jute & Wool Area Rug for a warm, textured floor accent."
+  },
+  {
+    "type": "interaction",
+    "user_query": "How do I clean spills on my velvet armchair?",
+    "bot_response": "Blot spills immediately with a clean, dry cloth. Avoid rubbing to prevent spreading the stain. For stubborn stains, use a fabric-specific cleaning solution or consult a professional cleaning service."
+  },
+  {
+    "type": "interaction",
+    "user_query": "Do you have tips for electric cookers?",
+    "bot_response": "Yes! Ensure the cooker is unplugged and cool before cleaning, wipe the exterior with a damp cloth and mild detergent, clean removable parts regularly, and avoid metal utensils that can scratch the surface."
+  }
+]
+

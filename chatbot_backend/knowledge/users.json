@@ -1,0 +1,30 @@
+[
+  {
+    "type": "user",
+    "name": "Alice Johnson",
+    "preferences": {
+      "favorite_categories": ["Living Room", "Bedroom"],
+      "preferred_niches": ["Luxury", "Top Picks"]
+    },
+    "past_interactions": [
+      {
+        "query": "Recommend a comfortable armchair for my living room",
+        "response": "Suggested Luxe Velvet Armchair in emerald green"
+      }
+    ]
+  },
+  {
+    "type": "user",
+    "name": "Michael Smith",
+    "preferences": {
+      "favorite_categories": ["Kitchen", "Bathroom"],
+      "preferred_niches": ["Top Selling", "Discounted"]
+    },
+    "past_interactions": [
+      {
+        "query": "What are the top-selling kitchen appliances?",
+        "response": "Suggested Electric Cooker, Fridge, and Kettle"
+      }
+    ]
+  }
+]

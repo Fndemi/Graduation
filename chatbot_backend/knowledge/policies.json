@@ -1,0 +1,32 @@
+[
+  {
+    "type": "policy",
+    "name": "Return Policy",
+    "description": "Customers can return most items within 30 days of delivery, provided they are in new, unused condition with all original packaging.",
+    "conditions": [
+      "Must include original receipt or order number",
+      "Items must be undamaged and unused",
+      "Certain items like customized furniture may not be eligible"
+    ]
+  },
+  {
+    "type": "policy",
+    "name": "Shipping Policy",
+    "description": "We provide nationwide shipping with tracking available for all orders. Shipping times vary depending on product type and destination.",
+    "conditions": [
+      "Standard delivery within 3-7 business days",
+      "Expedited shipping available at extra cost",
+      "Shipping charges may vary based on size and weight"
+    ]
+  },
+  {
+    "type": "policy",
+    "name": "Warranty Policy",
+    "description": "Selected products come with manufacturer warranties covering defects in material and workmanship.",
+    "conditions": [
+      "Warranty duration ranges from 6 months to 2 years depending on the product",
+      "Warranty claims must be accompanied by proof of purchase",
+      "Wear and tear or accidental damage is not covered"
+    ]
+  }
+]

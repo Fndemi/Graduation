@@ -1,0 +1,53 @@
+[
+  {
+    "type": "tip",
+    "product_name": "Luxe Velvet Armchair",
+    "tips": [
+      "Vacuum regularly with a soft brush attachment to remove dust and debris.",
+      "Blot spills immediately with a clean, dry cloth. Avoid rubbing to prevent spreading the stain.",
+      "Use fabric-specific cleaning solutions for deep stains. Always test on a hidden area first.",
+      "Keep away from direct sunlight to prevent fading."
+    ]
+  },
+  {
+    "type": "tip",
+    "product_name": "Bohemian Jute & Wool Area Rug",
+    "tips": [
+      "Vacuum regularly to prevent dirt buildup. Avoid using a vacuum with a beater bar as it can damage the fibers.",
+      "Rotate the rug periodically to ensure even wear.",
+      "Blot spills immediately using a clean, dry cloth. For stubborn stains, use mild soap and water.",
+      "Avoid prolonged exposure to moisture to prevent mold and mildew."
+    ]
+  },
+  {
+    "type": "tip",
+    "product_name": "Minimalist Walnut Coffee Table",
+    "tips": [
+      "Dust regularly with a soft, dry cloth to maintain the natural finish.",
+      "Use coasters and placemats to prevent water rings and heat damage.",
+      "Clean spills immediately with a damp cloth, then dry with a soft towel.",
+      "Avoid harsh chemicals or abrasive cleaners that can damage the wood surface."
+    ]
+  },
+  {
+    "type": "tip",
+    "product_name": "Electric Cooker",
+    "tips": [
+      "Ensure the cooker is unplugged and cool before cleaning.",
+      "Wipe the exterior with a damp cloth and mild detergent. Avoid immersing in water.",
+      "Regularly clean removable parts such as trays and racks according to the manual.",
+      "Avoid using metal utensils that can scratch the surface."
+    ]
+  },
+  {
+    "type": "tip",
+    "product_name": "Fridge",
+    "tips": [
+      "Clean the interior regularly with warm water and mild detergent.",
+      "Avoid overloading to ensure proper air circulation.",
+      "Check and replace door seals periodically to maintain energy efficiency.",
+      "Keep the exterior surfaces dry to prevent rust or discoloration."
+    ]
+  }
+
+]

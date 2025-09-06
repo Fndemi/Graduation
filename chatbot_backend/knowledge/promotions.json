@@ -1,0 +1,26 @@
+[
+  {
+    "type": "promotion",
+    "name": "Summer Sale",
+    "description": "Get up to 50% off selected furniture items in our summer clearance.",
+    "categories": ["Living Room", "Bedroom", "Kitchen"],
+    "niches": ["Top Picks", "Discounted"],
+    "valid_until": "2025-09-30"
+  },
+  {
+    "type": "promotion",
+    "name": "Buy More, Save More",
+    "description": "Purchase any two kitchen appliances and get an additional 10% off your total order.",
+    "categories": ["Kitchen"],
+    "niches": ["Top Selling"],
+    "valid_until": "2025-10-15"
+  },
+  {
+    "type": "promotion",
+    "name": "Luxury Week",
+    "description": "Exclusive deals on luxury furniture pieces. Enjoy 20% off selected sofas, chairs, and beds.",
+    "categories": ["Living Room", "Bedroom"],
+    "niches": ["Luxury"],
+    "valid_until": "2025-10-05"
+  }
+]

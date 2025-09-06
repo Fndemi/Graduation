@@ -3,19 +3,70 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Light mode colors */
+  --input-bg: #f3f4f6;
+  --input-text: #111827;
+  --border-color: #e5e7eb;
+  --card-bg: #ffffff;
+  
+  /* Light mode specific colors */
+  --header-text: #1E1E1E;        /* Create Account header */
+  --label-text: #363130;         /* Form labels */
+  --button-bg: #1E1E1E;          /* Sign Up button background */
+  --button-text: #F5F5F5;        /* Sign Up button text */
+  --terms-text: #363130;         /* Terms and services text */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-input-bg: var(--input-bg);
+  --color-input-text: var(--input-text);
+  --color-border: var(--border-color);
+  --color-card-bg: var(--card-bg);
+  --color-header-text: var(--header-text);
+  --color-label-text: var(--label-text);
+  --color-button-bg: var(--button-bg);
+  --color-button-text: var(--button-text);
+  --color-terms-text: var(--terms-text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Orange theme colors */
+  --color-orange-400: #fb923c;
+  --color-orange-500: #f97316;
+  --color-orange-600: #ea580c;
+  --color-orange-700: #c2410c;
+  
+  /* Gray colors for both modes */
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
+    /* Dark mode colors */
+    --input-bg: #374151;
+    --input-text: #ffffff;
+    --border-color: #4b5563;
+    --card-bg: #1f2937;
+    
+    /* Dark mode specific colors */
+    --header-text: #FFFFFF;        /* Create Account header - white */
+    --label-text: #FFFFFA;         /* Form labels - off-white */
+    --button-bg: #FFFFFF;          /* Sign Up button background - white */
+    --button-text: #000000;        /* Sign Up button text - black */
+    --terms-text: #FFFFFA;         /* Terms and services text - off-white */
   }
 }
 
@@ -23,4 +74,51 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom utility classes */
+.input-field {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--border-color);
+}
+
+.card-bg {
+  background-color: var(--card-bg);
+}
+
+.header-text {
+  color: var(--header-text);
+}
+
+.label-text {
+  color: var(--label-text);
+}
+
+.custom-button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+
+.custom-button:hover {
+  opacity: 0.9;
+}
+
+.custom-button:disabled {
+  opacity: 0.6;
+}
+
+.terms-text {
+  color: var(--terms-text);
+}
+
+/* Smooth transitions between themes */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+.focus-ring {
+  focus-ring-color: var(--color-orange-500);
 }

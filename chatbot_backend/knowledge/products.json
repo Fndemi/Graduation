@@ -1,1 +1,62 @@
-[{"id": "prod_101","type": "product","name": "Luxe Velvet Armchair","description": "A chic and comfortable armchair upholstered in soft, deep-pile velvet. It features a sturdy wooden frame and elegant brass legs, perfect for adding a touch of modern luxury to any living space. Available in a range of colors including emerald green, sapphire blue, and classic charcoal.","attributes": {"material": "Velvet","frame": "Walnut Wood","legs": "Brass","dimensions": "34\"W x 36\"D x 32\"H"}},{"id": "prod_102","type": "product","name": "Bohemian Jute & Wool Area Rug","description": "Hand-woven from a blend of natural jute and soft wool, this area rug brings a warm, earthy texture to your home. Its geometric patterns and neutral tones make it a versatile piece for a living room, bedroom, or entryway. The durable fibers are ideal for high-traffic areas.","attributes": {"material": "70% Jute, 30% Wool","style": "Bohemian","dimensions": "8' x 10'"}},{"id": "prod_103","type": "product","name": "Minimalist Walnut Coffee Table","description": "A beautifully crafted coffee table made from solid American walnut. Its clean lines and simple design emphasize the natural beauty of the wood grain. This piece is a perfect centerpiece for a minimalist or contemporary decor.","attributes": {"material": "Solid American Walnut","finish": "Natural Oil","dimensions": "48\"L x 24\"W x 16\"H"}},{"id": "faq_001","type": "faq","question": "How do I clean my velvet furniture?","answer": "For light cleaning, use a soft brush to gently remove dust. For spills, blot with a clean, dry cloth immediately. For more stubborn stains, we recommend using a professional cleaning service or a fabric-specific cleaning solution, following the product instructions carefully."},{"id": "faq_002","type": "faq","question": "What is your return policy?","answer": "We offer a 30-day return policy for most items. Items must be in new, unused condition with all original packaging. To initiate a return, please contact our customer service team with your order number."}]
+[
+  {
+    "type": "product",
+    "name": "Luxe Velvet Armchair",
+    "description": "A chic and comfortable armchair upholstered in soft, deep-pile velvet. Features a sturdy wooden frame and elegant brass legs. Available in colors like emerald green, sapphire blue, and charcoal.",
+    "material": "Velvet",
+    "frame": "Walnut Wood",
+    "legs": "Brass",
+    "dimensions": "34\"W x 36\"D x 32\"H",
+    "category": "Top Picks",
+    "niche": "living room",
+    "price": 1200,
+    "discountPercent": 15,
+    "discountedPrice": 1020,
+    "reviews": [
+      {"comment": "Super comfy and stylish!", "rating": 5},
+      {"comment": "Looks great in my living room", "rating": 4}
+    ]
+  },
+  {
+    "type": "product",
+    "name": "Bohemian Jute & Wool Area Rug",
+    "description": "Hand-woven from natural jute and soft wool, this area rug brings a warm, earthy texture. Its geometric patterns and neutral tones make it versatile for living rooms, bedrooms, or entryways.",
+    "material": "70% Jute, 30% Wool",
+    "style": "Bohemian",
+    "dimensions": "8' x 10'",
+    "category": "Top Picks",
+    "niche": "living room/bedroom",
+    "price": 450,
+    "discountPercent": 10,
+    "discountedPrice": 405,
+    "reviews": [
+      {"comment": "Beautiful texture and durable!", "rating": 5}
+    ]
+  },
+  {
+    "type": "product",
+    "name": "Minimalist Walnut Coffee Table",
+    "description": "A solid American walnut coffee table with clean lines and simple design, emphasizing the natural beauty of the wood grain. Perfect for minimalist or contemporary decor.",
+    "material": "Solid American Walnut",
+    "finish": "Natural Oil",
+    "dimensions": "48\"L x 24\"W x 16\"H",
+    "category": "Top Picks",
+    "niche": "living room",
+    "price": 800,
+    "discountPercent": 5,
+    "discountedPrice": 760,
+    "reviews": [
+      {"comment": "Elegant and sturdy", "rating": 5}
+    ]
+  },
+  {
+    "type": "faq",
+    "question": "How do I clean my velvet furniture?",
+    "answer": "For light cleaning, use a soft brush to remove dust. For spills, blot with a clean, dry cloth immediately. For stubborn stains, use a professional cleaning service or fabric-specific solution following product instructions."
+  },
+  {
+    "type": "faq",
+    "question": "What is your return policy?",
+    "answer": "30-day return policy for most items. Items must be in new, unused condition with all original packaging. Contact customer service with your order number to initiate a return."
+  }
+]

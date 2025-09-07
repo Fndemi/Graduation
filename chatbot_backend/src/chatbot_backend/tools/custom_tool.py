@@ -1,8 +1,15 @@
 import random
 import requests
+import os
+import json
+import sys
 from crewai.tools import BaseTool
 from typing import Optional, Type, Any
 from pydantic import BaseModel, Field
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+sys.path.insert(0, project_root)
+from services.vector_store import VectorStoreClient
 
 # --- Input Schemas ---
 class OrderTrackingInput(BaseModel):
@@ -19,8 +26,7 @@ class ReturnsInput(BaseModel):
 
 class ProductInfoInput(BaseModel):
     """Input schema for Product Info Tool."""
-    product_name: str = Field(..., description="The name of the product to get information for.")
-
+    product_name: str = Field(..., description="The name of the product or a description to get information for.")
 
 # --- Tools ---
 class OrderTrackingTool(BaseTool):
@@ -29,9 +35,6 @@ class OrderTrackingTool(BaseTool):
     args_schema: Type[BaseModel] = OrderTrackingInput
     
     def _run(self, order_id: str, run_manager: Optional[Any] = None) -> str:
-        """
-        Retrieves real-time order status from a local mock API.
-        """
         if not order_id:
             return "Please provide a valid order ID."
 
@@ -40,7 +43,6 @@ class OrderTrackingTool(BaseTool):
         try:
             response = requests.get(API_ENDPOINT)
             response.raise_for_status()
-
             tracking_data = response.json()
             
             if not tracking_data:
@@ -70,10 +72,6 @@ class StyleAdvisorTool(BaseTool):
     args_schema: Type[BaseModel] = StyleAdvisorInput
     
     def _run(self, query: str = None, description: str = None, run_manager: Optional[Any] = None, **kwargs) -> str:
-        """
-        Provides detailed style recommendations based on a user query.
-        Handles multiple input formats for compatibility.
-        """
         actual_query = query or description or "general home decor recommendations"
         
         if "living room" in actual_query.lower():
@@ -96,47 +94,67 @@ class ReturnsTool(BaseTool):
     args_schema: Type[BaseModel] = ReturnsInput
     
     def _run(self, query: str, run_manager: Optional[Any] = None) -> str:
-        """
-        Initiates a return process and provides detailed instructions.
-        """
         if "damaged" in query.lower():
             return f"Return process for '{query}' has been initiated. A shipping label has been sent to your email. Please use a padded box and mark it as 'Damaged - Do Not Resell'."
         else:
             return f"Return process for '{query}' has been initiated. A shipping label has been sent to your email. Your refund will be processed within 5-7 business days after we receive and inspect the item."
 
-class ProductInfoTool(BaseTool):
+class VectorDBTool(BaseTool):
+    """
+    A tool for querying the vector database to find relevant documents.
+    """
     name: str = "Product Info Tool"
-    description: str = "A tool to get specific details (dimensions, materials, weight) for a given product."
-    args_schema: Type[BaseModel] = ProductInfoInput
+    description: str = (
+        "Useful for answering questions about product information, specifications, "
+        "and frequently asked questions (FAQs). "
+        "Input should be a detailed, natural language query string."
+        "The tool can also filter the search by document type (e.g., 'product' or 'faq')."
+    )
 
-    def _run(self, product_name: str, run_manager: Optional[Any] = None) -> str:
-        """
-        Simulates retrieving detailed product information from a database.
-        """
-        product_database = {
-            "Oslo Sofa": {
-                "dimensions": "85 inches (W) x 35 inches (D) x 30 inches (H)",
-                "materials": "Solid oak frame, velvet upholstery",
-                "weight": "150 lbs",
-                "color": "Slate gray"
-            },
-            "Nordic Coffee Table": {
-                "dimensions": "48 inches (W) x 24 inches (D) x 18 inches (H)",
-                "materials": "Walnut wood, tempered glass top",
-                "weight": "45 lbs",
-                "color": "Natural wood"
-            },
-            "Minimalist Floor Lamp": {
-                "dimensions": "72 inches (H) x 12 inches (W) base",
-                "materials": "Brushed brass, steel",
-                "weight": "15 lbs",
-                "color": "Brass"
-            }
-        }
+    class VectorDBToolInput(BaseModel):
+        query: str = Field(..., description="The natural language question or query to search for.")
+        document_type: Optional[str] = Field(None, description="Optional filter to specify the type of document to search, e.g., 'product' or 'faq'.")
+    
+    args_schema: Type[BaseModel] = VectorDBToolInput
 
-        product_info = product_database.get(product_name)
-        if product_info:
-            details = [f"{key.capitalize()}: {value}" for key, value in product_info.items()]
-            return f"Product details for {product_name}:\n" + "\n".join(details)
-        else:
-            return f"Product '{product_name}' not found. Please provide a valid product name."
+    def _run(self, query: str, document_type: Optional[str] = None) -> str:
+        try:
+            client = VectorStoreClient()
+            
+            where_filter = {"source": document_type} if document_type else None
+            
+            results = client.query(query, n_results=5, where_filter=where_filter)
+            
+            if not results:
+                return "No relevant documents found in the vector database."
+            
+            formatted_results = ""
+            for doc in results:
+                source = doc['metadata'].get('source', 'unknown')
+                
+                if source == 'product':
+                    name = doc['metadata'].get('name', 'N/A')
+                    category = doc['metadata'].get('category', 'N/A')
+                    price = doc['metadata'].get('price', 'N/A')
+                    content = doc['document']
+                    
+                    formatted_results += (
+                        f"--- Product Match ---\n"
+                        f"Name: {name}\n"
+                        f"Category: {category}\n"
+                        f"Price: {price}\n"
+                        f"Details: {content}\n\n"
+                    )
+                elif source == 'faq':
+                    content = doc['document']
+                    formatted_results += (
+                        f"--- FAQ Match ---\n"
+                        f"Content: {content}\n\n"
+                    )
+                else:
+                    formatted_results += f"Source: {source}\nContent: {doc['document']}\n\n"
+            
+            return formatted_results.strip()
+            
+        except Exception as e:
+            return f"An error occurred while querying the vector database: {e}"

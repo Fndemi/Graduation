@@ -1,8 +1,8 @@
 import json
 import os
 import glob
+import uuid
 from typing import List, Dict
-
 from sentence_transformers import SentenceTransformer
 from chromadb import PersistentClient
 from chromadb.utils import embedding_functions
@@ -12,7 +12,7 @@ class VectorStoreClient:
     A client to handle all vector database interactions for the chatbot.
     """
     
-    def __init__(self, db_path: str = "./knowledge/vector_db"):
+    def __init__(self, db_path: str = "./data/vector_db"):
         """Initializes the vector database client and embedding model."""
         try:
             print("Initializing SentenceTransformer model...")
@@ -21,10 +21,9 @@ class VectorStoreClient:
                 model_name="all-MiniLM-L6-v2"
             )
 
-            print("Initializing ChromaDB persistent client...")
+            print(f"Initializing ChromaDB persistent client at path: {db_path}...")
             self.client = PersistentClient(path=db_path)
             
-            # The collection is created or retrieved here
             self.collection = self.client.get_or_create_collection(
                 name="products_and_faqs",
                 embedding_function=self.embedding_function
@@ -36,16 +35,25 @@ class VectorStoreClient:
     def _process_document(self, file_path: str) -> List[Dict]:
         """
         Processes documents from a given file path, supporting JSON and other formats.
-        Returns a list of dictionaries with 'id', 'document', and 'metadata'.
+        Returns a list of dictionaries with 'document' and 'metadata'.
         """
         documents_to_ingest = []
         file_extension = os.path.splitext(file_path)[1].lower()
+        print(f"Processing file: {file_path}")
 
         if file_extension == '.json':
-            with open(file_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            except json.JSONDecodeError as e:
+                print(f"Warning: Skipping '{file_path}'. File is empty or not a valid JSON. Error: {e}")
+                return []
             
             for doc in data:
+                if not isinstance(doc, dict):
+                    print(f"Skipping non-dictionary item in {file_path}: {doc}")
+                    continue
+                
                 doc_type = doc.get("type", "unknown")
                 text_content = ""
                 metadata = {}
@@ -54,30 +62,30 @@ class VectorStoreClient:
                     text_content = (
                         f"Product Name: {doc.get('name', '')}. "
                         f"Description: {doc.get('description', '')}. "
+                        f"Category: {doc.get('category', 'General')}. "
+                        f"Price: {doc.get('price', 'N/A')}. "
                         f"Attributes: {json.dumps(doc.get('attributes', {}))}"
                     )
                     metadata = {
                         "source": "product",
                         "name": doc.get('name', ''),
                         "category": doc.get('category', 'General'),
-                        "id": doc.get('id', '')
+                        "price": doc.get('price', 'N/A'),
                     }
                 elif doc_type == "faq":
                     text_content = f"Question: {doc.get('question', '')}. Answer: {doc.get('answer', '')}"
                     metadata = {
                         "source": "faq",
                         "category": doc.get('category', 'General'),
-                        "id": doc.get('id', '')
                     }
                 
-                if text_content and doc.get("id"):
+                if text_content:
                     documents_to_ingest.append({
-                        "id": str(doc["id"]),
                         "document": text_content,
                         "metadata": metadata,
                     })
         else:
-            print(f"Warning: Unsupported file type '{file_extension}'. Skipping {file_path}")
+            print(f"Warning: Unsupported file type '{file_extension}'. Skipping.")
             
         return documents_to_ingest
 
@@ -85,17 +93,19 @@ class VectorStoreClient:
         """Loads and ingests all supported documents from a directory into the vector store."""
         print(f"Starting data ingestion from directory: {knowledge_dir}")
 
-        # Delete all documents in the collection before a fresh ingestion
         print("Clearing existing data from the vector store...")
         try:
-            # The empty `where` clause tells ChromaDB to delete everything.
-            self.collection.delete(where={})
-            print("Successfully cleared all existing data.")
+            ids = self.collection.get(limit=999999)['ids']
+            if ids:
+                self.collection.delete(ids=ids)
+                print("Successfully cleared all existing data.")
+            else:
+                print("Collection was already empty. No data to clear.")
         except Exception as e:
             print(f"Failed to clear existing data: {e}. Attempting to proceed with ingestion.")
         
         all_documents = []
-        for file_path in glob.glob(os.path.join(knowledge_dir, "**/*"), recursive=True):
+        for file_path in glob.glob(os.path.join(knowledge_dir, "**/*.json"), recursive=True):
             if os.path.isfile(file_path):
                 all_documents.extend(self._process_document(file_path))
 
@@ -105,16 +115,16 @@ class VectorStoreClient:
 
         print(f"Processing and preparing {len(all_documents)} documents for ingestion...")
         
-        ids = [doc['id'] for doc in all_documents]
         documents = [doc['document'] for doc in all_documents]
         metadatas = [doc['metadata'] for doc in all_documents]
+        ids = [str(uuid.uuid4()) for _ in range(len(documents))]
 
         self.collection.add(
             documents=documents,
             metadatas=metadatas,
-            ids=ids
+            ids=ids,
         )
-        print(f"Successfully ingested {len(ids)} documents into the vector store.")
+        print(f"Successfully ingested {len(documents)} documents into the vector store.")
 
     def query(self, query_text: str, n_results: int = 5, where_filter: dict = None) -> List[Dict]:
         """
@@ -126,15 +136,15 @@ class VectorStoreClient:
             results = self.collection.query(
                 query_texts=[query_text],
                 n_results=n_results,
-                where=where_filter
+                where=where_filter,
+                include=['metadatas', 'documents', 'distances']
             )
             
-            # Format the output for easier use by the agents
             formatted_results = []
-            for i, doc in enumerate(results["documents"][0]):
+            for i in range(len(results["ids"][0])):
                 formatted_results.append({
                     "id": results["ids"][0][i],
-                    "document": doc,
+                    "document": results["documents"][0][i],
                     "metadata": results["metadatas"][0][i],
                     "score": results["distances"][0][i]
                 })
@@ -145,26 +155,19 @@ class VectorStoreClient:
             print(f"An error occurred during vector store query: {e}")
             return []
 
-# Example usage:
 if __name__ == "__main__":
     try:
         client = VectorStoreClient()
         knowledge_dir = "./knowledge"
         
-        # Ingest data from the knowledge directory
         client.ingest_data(knowledge_dir)
         
-        # Example 1: Query for product information
+        print("\nTesting Query...")
         product_results = client.query("velvet armchair dimensions")
-        print("\nProduct Query Results:")
-        for result in product_results:
-            print(f"- [Score: {result['score']:.2f}] Document: {result['document'][:70]}... ID: {result['id']}")
-            
-        # Example 2: Query for FAQs using a metadata filter
-        faq_results = client.query("how do I clean my new sofa?", where_filter={"source": "faq"})
-        print("\nFAQ Query Results:")
-        for result in faq_results:
-            print(f"- [Score: {result['score']:.2f}] Document: {result['document'][:70]}... ID: {result['id']}")
+        if product_results:
+            print("Query Successful. Found relevant documents.")
+        else:
+            print("Query failed or no documents found.")
 
     except Exception as e:
         print(f"A fatal error occurred: {e}")

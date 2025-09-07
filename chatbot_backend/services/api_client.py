@@ -1,8 +1,11 @@
+import requests
 from typing import List, Dict
 
 class EcommerceAPIClient:
     """
     A client to interact with the e-commerce API.
+    This class handles all HTTP requests to an external service,
+    encapsulating the logic for fetching and sending data.
     """
 
     def __init__(self, base_url: str):
@@ -20,8 +23,17 @@ class EcommerceAPIClient:
         Returns:
             Dict: A dictionary containing the order status details.
         """
-        print(f"Calling API to get status for order ID: {order_id}")
-        return {"status": "shipped", "estimated_delivery": "2023-10-27"}
+        url = f"{self.base_url}/orders/{order_id}/status"
+        print(f"Calling API to get status for order ID: {order_id} at {url}")
+        
+        try:
+            response = requests.get(url)
+            # Raise an exception for bad status codes (4xx or 5xx)
+            response.raise_for_status()  
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching order status: {e}")
+            return {"status": "error", "message": "Failed to fetch order status."}
 
     def add_to_cart(self, product_id: str, quantity: int) -> str:
         """
@@ -34,9 +46,17 @@ class EcommerceAPIClient:
         Returns:
             str: A confirmation message.
         """
-        print(f"Calling API to add product {product_id} (x{quantity}) to cart.")
-        # This would make an HTTP POST request to an endpoint like `{self.base_url}/cart/add`.
-        return f"Product '{product_id}' added to cart successfully."
+        url = f"{self.base_url}/cart/add"
+        payload = {"product_id": product_id, "quantity": quantity}
+        print(f"Calling API to add product {product_id} (x{quantity}) to cart at {url}")
+        
+        try:
+            response = requests.post(url, json=payload)
+            response.raise_for_status()
+            return response.text
+        except requests.exceptions.RequestException as e:
+            print(f"Error adding to cart: {e}")
+            return "Failed to add product to cart."
 
     def initiate_return(self, order_id: str) -> str:
         """
@@ -48,9 +68,17 @@ class EcommerceAPIClient:
         Returns:
             str: A confirmation message for the return request.
         """
-        print(f"Calling API to initiate return for order ID: {order_id}")
-        # This would make an HTTP POST request to an endpoint like `{self.base_url}/returns/initiate`.
-        return f"Return for order '{order_id}' has been initiated."
+        url = f"{self.base_url}/returns/initiate"
+        payload = {"order_id": order_id}
+        print(f"Calling API to initiate return for order ID: {order_id} at {url}")
+        
+        try:
+            response = requests.post(url, json=payload)
+            response.raise_for_status()
+            return f"Return for order '{order_id}' has been initiated."
+        except requests.exceptions.RequestException as e:
+            print(f"Error initiating return: {e}")
+            return "Failed to initiate return."
     
     def search_products(self, query: str) -> List[Dict]:
         """
@@ -62,23 +90,35 @@ class EcommerceAPIClient:
         Returns:
             List[Dict]: A list of product dictionaries matching the query.
         """
-        print(f"Calling API to search for products with query: {query}")
-        # This would make an HTTP GET request to an endpoint like `{self.base_url}/products/search?q={query}`.
-        return [{"product_id": "table_01", "name": "Modern Dining Table"}]
+        url = f"{self.base_url}/products/search"
+        params = {"q": query}
+        print(f"Calling API to search for products with query: {query} at {url}")
+        
+        try:
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Error searching for products: {e}")
+            return []
 
-# Example usage:
 if __name__ == "__main__":
-    client = EcommerceAPIClient(base_url="https://api.luxe-ecommerce.com")
+    # Example usage with a placeholder API URL
+    client = EcommerceAPIClient(base_url="https://api.example.com")
     
+    # Test each method
+    print("\n--- Testing get_order_status ---")
     order_status = client.get_order_status(order_id="12345")
-    print(f"\nOrder Status: {order_status}")
-
+    print(f"Order Status: {order_status}")
+    
+    print("\n--- Testing add_to_cart ---")
     cart_status = client.add_to_cart(product_id="armchair_01", quantity=2)
     print(f"Add to Cart Status: {cart_status}")
     
+    print("\n--- Testing initiate_return ---")
     return_status = client.initiate_return(order_id="12345")
     print(f"Return Status: {return_status}")
     
+    print("\n--- Testing search_products ---")
     search_results = client.search_products("sofa")
     print(f"Search Results: {search_results}")
-

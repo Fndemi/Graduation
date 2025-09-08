@@ -103,16 +103,15 @@ class EcommerceAPIClient:
             return []
 
 if __name__ == "__main__":
-    # Example usage with a placeholder API URL
-    client = EcommerceAPIClient(base_url="https://api.example.com")
     
-    # Test each method
+    client = EcommerceAPIClient(base_url="http://127.0.0.1:8001")
+    
     print("\n--- Testing get_order_status ---")
     order_status = client.get_order_status(order_id="12345")
     print(f"Order Status: {order_status}")
     
     print("\n--- Testing add_to_cart ---")
-    cart_status = client.add_to_cart(product_id="armchair_01", quantity=2)
+    cart_status = client.add_to_cart(product_id="p-001", quantity=2)
     print(f"Add to Cart Status: {cart_status}")
     
     print("\n--- Testing initiate_return ---")

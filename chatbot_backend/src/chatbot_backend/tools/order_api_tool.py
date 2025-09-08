@@ -1,85 +1,54 @@
-#This tool provides an interface for AI agents to query a mock e-commerce API.
-#It is designed to be used within a CrewAI or LangChain agentic framework.
-from typing import Type
-from langchain.tools import BaseTool
-from pydantic import BaseModel, Field
+import os
+from crewai.tools import BaseTool
+from services.api_client import EcommerceAPIClient
 
-# Mock data to simulate an external API response
-MOCK_ORDERS_DB = {
-    "ORD-87654": {
-        "status": "Shipped",
-        "product_id": "PROD-203",
-        "product_name": "Modern Leather Armchair",
-        "shipping_carrier": "FedEx",
-        "tracking_number": "1Z9999999999999999",
-        "estimated_delivery": "2024-09-20"
-    },
-    "ORD-12345": {
-        "status": "Delivered",
-        "product_id": "PROD-101",
-        "product_name": "Bohemian Jute & Wool Area Rug",
-        "delivery_date": "2024-09-01"
-    },
-    "ORD-99887": {
-        "status": "Processing",
-        "product_id": "PROD-405",
-        "product_name": "Vintage Industrial Bookshelf",
-        "estimated_delivery": "2024-09-25"
-    }
-}
+# Initialize the API client once at the top level
+api_client = EcommerceAPIClient(base_url="http://127.0.0.1:8001")
 
-class OrderTrackingTool(BaseTool):
-    """
-    A tool for tracking the status of an e-commerce order.
-    """
-    name = "order_tracking"
-    description = (
-        "Useful for fetching the status and details of a customer's order. "
-        "Input should be a valid order ID, e.g., 'ORD-87654'."
+class OrderApiTool(BaseTool):
+    name: str = "Order Tracking Tool"
+    description: str = (
+        "Useful for tracking the status of a customer's order. "
+        "The input to this tool must be a string representing the order ID, "
+        "for example 'ORD-87654'."
     )
-
-    # Define the input schema for the tool
-    class OrderTrackingToolInput(BaseModel):
-        order_id: str = Field(..., description="The unique identifier for the order (e.g., 'ORD-12345').")
-
-    args_schema: Type[BaseModel] = OrderTrackingToolInput
 
     def _run(self, order_id: str) -> str:
         """
-        Retrieves order information from the mock database.
-        """
-        try:
-            order_info = MOCK_ORDERS_DB.get(order_id.upper())
-            if not order_info:
-                return f"Order with ID '{order_id}' not found."
-
-            # Format the order information for the agent
-            formatted_info = f"Order ID: {order_id}\n"
-            for key, value in order_info.items():
-                formatted_info += f"{key.replace('_', ' ').title()}: {value}\n"
+        Fetches the order status from the E-commerce API.
+        The order ID can be any valid order number, for example: '12345' or '67890'.
+        
+        Args:
+            order_id (str): The unique identifier of the order.
             
-            return formatted_info.strip()
+        Returns:
+            str: A formatted string containing the order status details.
+        """
+        response = api_client.get_order_status(order_id)
+        
+        if response and response.get("status") == "error":
+            return response.get("message", "Could not retrieve order details.")
+        
+        status = response.get("status", "N/A")
+        tracking = response.get("tracking_number", "N/A")
+        carrier = response.get("carrier", "N/A")
+        delivery = response.get("estimated_delivery", "N/A")
+        
+        return (
+            f"Order Status: {status}\n"
+            f"Carrier: {carrier}\n"
+            f"Tracking Number: {tracking}\n"
+            f"Estimated Delivery: {delivery}"
+        )
 
-        except Exception as e:
-            return f"An error occurred while fetching order details: {e}"
-
-
+# Example of how the tool can be used, for testing purposes.
 if __name__ == '__main__':
-    # This block demonstrates how the tool works independently
-    tool = OrderTrackingTool()
-    
-    # Test case for a valid order
-    order_id_valid = "ORD-87654"
-    results_valid = tool.run(order_id=order_id_valid)
-    print(f"Tool execution for query: '{order_id_valid}'\n")
-    print("Results:")
-    print(results_valid)
-    
-    print("\n---\n")
-    
-    # Test case for a non-existent order
-    order_id_invalid = "ORD-00000"
-    results_invalid = tool.run(order_id=order_id_invalid)
-    print(f"Tool execution for query: '{order_id_invalid}'\n")
-    print("Results:")
-    print(results_invalid)
+    tool = OrderApiTool()
+    # Test a valid order ID from your db.json
+    print("Testing with a valid order ID:")
+    result = tool.run("12345")
+    print(result)
+
+    print("\nTesting with an invalid order ID:")
+    result_invalid = tool.run("INVALID-ID")
+    print(result_invalid)

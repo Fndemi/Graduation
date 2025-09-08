@@ -1,7 +1,14 @@
-FastAPI
+fastapi
 uvicorn
 pydantic
 langchain
-google-generativeai
+langchain-core
+langchain-community
 openai
+tiktoken
+loguru
+requests
 python-dotenv
+google-api-python-client
+google-generativeai
+groqai

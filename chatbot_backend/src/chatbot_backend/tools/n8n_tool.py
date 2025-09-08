@@ -1,76 +1,75 @@
+import os
+import json
+import requests
 from typing import Type
-from langchain.tools import BaseTool
-from pydantic import BaseModel, Field
+from langchain.tools import tool
+from datetime import datetime
 
-# Mock data to simulate n8n workflow responses
-MOCK_WORKFLOW_DB = {
-    "initiate_return": {
-        "success": True,
-        "message": "Return workflow successfully initiated. A return label has been sent to the customer's email.",
-        "return_id": "RET-09876"
+N8N_WEBHOOK_URL: str = "https://directedjeremiah.app.n8n.cloud/webhook/a62a7cb9-8b1d-4eab-8c26-0505bf3bc4c5"
+
+@tool
+def send_customer_details(name: str, phone: str, email: str, product: str, location: str) -> str:
+    """
+    Useful for sending customer and product details to an external workflow for follow-up.
+    This is the only tool that can handle requests for sending information, like
+    requesting a return, refund, or connecting with a representative.
+    When using this tool, make sure to get the customer's name, email, phone,
+    the product they're asking about, and their location before invoking it.
+    
+    Args:
+        name: The customer's full name.
+        phone: The customer's phone number.
+        email: The customer's email address.
+        product: The name of the product the customer is interested in.
+        location: The customer's city or location.
+    """
+    payload = {
+        "name": name,
+        "phone": phone,
+        "email": email,
+        "product": product,
+        "location": location,
+        "date": datetime.now().isoformat()
     }
-}
-
-class N8NTool(BaseTool):
-    """
-    A tool for triggering external n8n workflows.
-    """
-    name = "n8n_workflow_trigger"
-    description = (
-        "Useful for initiating automated workflows for tasks like processing returns or refunds. "
-        "Input should be the name of the workflow to trigger and any required data."
-    )
-
-    # Define the input schema for the tool
-    class N8NToolInput(BaseModel):
-        workflow_name: str = Field(..., description="The name of the n8n workflow to trigger (e.g., 'initiate_return').")
-        data: dict = Field(..., description="A dictionary of data required for the workflow (e.g., {'order_id': 'ORD-12345'}).")
-
-    args_schema: Type[BaseModel] = N8NToolInput
-
-    def _run(self, workflow_name: str, data: dict) -> str:
-        """
-        Triggers a mock n8n workflow and returns a formatted response.
-        """
-        try:
-            workflow_response = MOCK_WORKFLOW_DB.get(workflow_name)
-            
-            if not workflow_response:
-                return f"Error: n8n workflow '{workflow_name}' not found."
-
-            # Format the response for the agent
-            formatted_response = f"n8n Workflow Triggered: '{workflow_name}'\n"
-            formatted_response += f"Status: {'Success' if workflow_response['success'] else 'Failure'}\n"
-            formatted_response += f"Message: {workflow_response['message']}\n"
-            
-            # Include specific data from the workflow response if available
-            for key, value in workflow_response.items():
-                if key not in ['success', 'message']:
-                    formatted_response += f"{key.replace('_', ' ').title()}: {value}\n"
-            
-            return formatted_response.strip()
-
-        except Exception as e:
-            return f"An error occurred while triggering the n8n workflow: {e}"
+    
+    try:
+        print(f"Calling n8n webhook at {N8N_WEBHOOK_URL} with payload: {payload}")
+        response = requests.post(N8N_WEBHOOK_URL, json=payload, timeout=5)
+        response.raise_for_status()
+        
+        response_data = response.json()
+        return f"Successfully sent customer details to workflow. N8n response: {json.dumps(response_data)}"
+        
+    except requests.exceptions.Timeout:
+        return "Error: Request to n8n workflow timed out. The workflow may still be processing."
+    except requests.exceptions.RequestException as e:
+        return f"Error: Failed to send customer details to n8n workflow. Details: {e}"
 
 if __name__ == '__main__':
-    # This block demonstrates how the tool works independently
-    tool = N8NTool()
+    print("Testing sending customer details to workflow:")
+    customer_data = {
+        "name": "Alex Johnson",
+        "phone": "555-555-5555",
+        "email": "alex.johnson@example.com",
+        "product": "Linen Sofa",
+        "location": "Miami"
+    }
     
-    # Test case for a valid workflow trigger
-    workflow_name_valid = "initiate_return"
-    data_valid = {"order_id": "ORD-12345"}
-    results_valid = tool.run(workflow_name=workflow_name_valid, data=data_valid)
-    print(f"Tool execution for workflow: '{workflow_name_valid}' with data: {data_valid}\n")
+    result = send_customer_details(**customer_data)
     print("Results:")
-    print(results_valid)
-    
+    print(result)
+
     print("\n---\n")
     
-    # Test case for a non-existent workflow
-    workflow_name_invalid = "process_refund"
-    data_invalid = {"order_id": "ORD-67890"}
-    results_invalid = tool.run(workflow_name=workflow_name_invalid, data=data_invalid)
-    print(f"Tool execution for workflow: '{workflow_name_invalid}' with data: {data_invalid}\n")
-    print("Results:")
-    print(results_invalid)
+    # Test case with invalid data (the agent would be responsible for this validation)
+    print("This is how the tool would handle an error:")
+    try:
+        invalid_data = {
+            "name": "Jane Doe",
+            "email": "jane.doe@example.com",
+            "product": "Velvet Armchair",
+            "location": "Los Angeles"
+        }
+        send_customer_details(**invalid_data)
+    except Exception as e:
+        print(f"Caught expected error: {e}")

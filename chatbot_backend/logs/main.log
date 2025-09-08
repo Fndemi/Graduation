@@ -1,0 +1,42 @@
+2025-09-09 00:34:39 - chatbot.main - INFO - logging_config.py:131 - Logging system initialized successfully
+2025-09-09 00:34:39 - chatbot.main - INFO - logging_config.py:132 - Log files will be stored in: C:\Users\Admin\Desktop\E-Commerce\chatbot_backend\logs
+2025-09-09 00:34:39 - chatbot.main - INFO - main.py:24 - Starting up: Initializing LangChain Agent...
+2025-09-09 00:34:39 - chatbot.main - INFO - langchain_agent.py:40 - Initializing LangChain Agent with Groq LLM...
+2025-09-09 00:34:41 - chatbot.main - INFO - langchain_agent.py:76 - LangChain agent created successfully.
+2025-09-09 00:34:41 - chatbot.main - INFO - main.py:27 - Startup complete: Agent is ready to serve requests.
+2025-09-09 00:47:46 - chatbot.main - INFO - main.py:32 - Shutting down: Application is closing.
+2025-09-09 00:49:39 - chatbot.main - INFO - logging_config.py:131 - Logging system initialized successfully
+2025-09-09 00:49:39 - chatbot.main - INFO - logging_config.py:132 - Log files will be stored in: C:\Users\Admin\Desktop\E-Commerce\chatbot_backend\logs
+2025-09-09 00:49:39 - chatbot.main - INFO - main.py:26 - Starting up: Initializing LangChain Agent...
+2025-09-09 00:49:39 - chatbot.main - INFO - langchain_agent.py:40 - Initializing LangChain Agent with Groq LLM...
+2025-09-09 00:49:41 - chatbot.main - INFO - langchain_agent.py:76 - LangChain agent created successfully.
+2025-09-09 00:49:41 - chatbot.main - INFO - main.py:29 - Startup complete: Agent is ready to serve requests.
+2025-09-09 00:51:38 - chatbot.main - INFO - main.py:34 - Shutting down: Application is closing.
+2025-09-09 00:52:44 - chatbot.main - INFO - logging_config.py:131 - Logging system initialized successfully
+2025-09-09 00:52:44 - chatbot.main - INFO - logging_config.py:132 - Log files will be stored in: C:\Users\Admin\Desktop\E-Commerce\chatbot_backend\logs
+2025-09-09 00:52:44 - chatbot.main - INFO - main.py:28 - Starting up: Initializing LangChain Agent...
+2025-09-09 00:52:44 - chatbot.main - INFO - langchain_agent.py:40 - Initializing LangChain Agent with Groq LLM...
+2025-09-09 00:52:47 - chatbot.main - INFO - langchain_agent.py:76 - LangChain agent created successfully.
+2025-09-09 00:52:47 - chatbot.main - INFO - main.py:31 - Startup complete: Agent is ready to serve requests.
+2025-09-09 00:54:08 - chatbot.main - INFO - main.py:36 - Shutting down: Application is closing.
+2025-09-09 00:55:22 - chatbot.main - INFO - logging_config.py:131 - Logging system initialized successfully
+2025-09-09 00:55:22 - chatbot.main - INFO - logging_config.py:132 - Log files will be stored in: C:\Users\Admin\Desktop\E-Commerce\chatbot_backend\logs
+2025-09-09 00:55:22 - chatbot.main - INFO - main.py:29 - Starting up: Initializing LangChain Agent...
+2025-09-09 00:55:22 - chatbot.main - INFO - langchain_agent.py:40 - Initializing LangChain Agent with Groq LLM...
+2025-09-09 00:55:25 - chatbot.main - INFO - langchain_agent.py:76 - LangChain agent created successfully.
+2025-09-09 00:55:25 - chatbot.main - INFO - main.py:32 - Startup complete: Agent is ready to serve requests.
+2025-09-09 00:58:32 - chatbot.main - INFO - main.py:37 - Shutting down: Application is closing.
+2025-09-09 00:59:37 - chatbot.main - INFO - logging_config.py:131 - Logging system initialized successfully
+2025-09-09 00:59:37 - chatbot.main - INFO - logging_config.py:132 - Log files will be stored in: C:\Users\Admin\Desktop\E-Commerce\chatbot_backend\logs
+2025-09-09 00:59:37 - chatbot.main - INFO - main.py:26 - Starting up: Initializing LangChain Agent...
+2025-09-09 00:59:37 - chatbot.main - INFO - langchain_agent.py:40 - Initializing LangChain Agent with Groq LLM...
+2025-09-09 00:59:40 - chatbot.main - INFO - langchain_agent.py:76 - LangChain agent created successfully.
+2025-09-09 00:59:40 - chatbot.main - INFO - main.py:29 - Startup complete: Agent is ready to serve requests.
+2025-09-09 01:01:46 - chatbot.main - INFO - main.py:34 - Shutting down: Application is closing.
+2025-09-09 01:02:42 - chatbot.main - INFO - logging_config.py:131 - Logging system initialized successfully
+2025-09-09 01:02:42 - chatbot.main - INFO - logging_config.py:132 - Log files will be stored in: C:\Users\Admin\Desktop\E-Commerce\chatbot_backend\logs
+2025-09-09 01:02:42 - chatbot.main - INFO - main.py:26 - Starting up: Initializing LangChain Agent...
+2025-09-09 01:02:42 - chatbot.main - INFO - langchain_agent.py:40 - Initializing LangChain Agent with Groq LLM...
+2025-09-09 01:02:44 - chatbot.main - INFO - langchain_agent.py:76 - LangChain agent created successfully.
+2025-09-09 01:02:44 - chatbot.main - INFO - main.py:29 - Startup complete: Agent is ready to serve requests.
+2025-09-09 01:04:39 - chatbot.main - INFO - main.py:34 - Shutting down: Application is closing.

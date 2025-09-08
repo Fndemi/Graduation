@@ -10,7 +10,6 @@ sys.path.insert(0, project_root)
 
 from services.vector_store import VectorStoreClient
 
-# Global variable to hold the single instance of the vector store client
 _shared_client = None
 
 class VectorDBTool(BaseTool):

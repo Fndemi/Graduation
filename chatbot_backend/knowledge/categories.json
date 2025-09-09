@@ -1,0 +1,27 @@
+[
+  {
+    "type": "category",
+    "name": "Living Room",
+    "description": "Furniture and decor for the living room, including sofas, chairs, coffee tables, and entertainment units."
+  },
+  {
+    "type": "category",
+    "name": "Bedroom",
+    "description": "Products for bedrooms such as beds, mattresses, nightstands, and wardrobes."
+  },
+  {
+    "type": "category",
+    "name": "Kitchen",
+    "description": "Appliances, cookware, and dining furniture designed for kitchens and dining areas."
+  },
+  {
+    "type": "category",
+    "name": "Bathroom",
+    "description": "Bathroom essentials, including showers, bath tubs, cabinets, and accessories."
+  },
+  {
+    "type": "category",
+    "name": "Home Office",
+    "description": "Furniture and accessories for a productive workspace at home, including desks, chairs, and storage solutions."
+  }
+]

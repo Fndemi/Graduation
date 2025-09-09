@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://graduation-project-wenh.onrender.com/';
+const API_BASE_URL = 'https://graduation-project-wenh.onrender.com';
 
 const refreshToken = async (): Promise<boolean> => {
   const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null;

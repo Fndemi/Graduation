@@ -26,12 +26,12 @@ export type Product = {
 
 export const searchProducts = async (params: { search?: string; category?: string; niche?: string }) => {
   const query = new URLSearchParams(params as any).toString();
-  const res = await fetch(`http://localhost:3000/products?${query}`);
+  const res = await fetch(`https://graduation-project-wenh.onrender.com/products?${query}`);
   return res.json();
 };
 
 export async function fetchProducts(): Promise<Product[]> {
-  const res = await fetch("http://localhost:3000/products", {
+  const res = await fetch("https://graduation-project-wenh.onrender.com/products", {
     cache: "no-store", // ensures fresh data every fetch
   });
 
@@ -43,7 +43,7 @@ export async function fetchProducts(): Promise<Product[]> {
 }
 
 export async function fetchProductById(id: string): Promise<Product> {
-  const res = await fetch(`http://localhost:3000/products/${id}`, {
+  const res = await fetch(`https://graduation-project-wenh.onrender.com/products/${id}`, {
     cache: "no-store", // ensures always fresh data
   });
 

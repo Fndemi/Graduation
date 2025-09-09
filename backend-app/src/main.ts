@@ -7,7 +7,7 @@ async function bootstrap() {
 
   // Enable CORS for your frontend
   app.enableCors({
-    origin: 'http://localhost:3001',
+    origin: 'https://graduation-project-frontend-futt.onrender.com',
   });
 
   // Global validation pipe

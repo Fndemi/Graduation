@@ -5,9 +5,12 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable CORS for your frontend
+  // Enable CORS for your frontends
   app.enableCors({
-    origin: 'https://graduation-project-frontend-futt.onrender.com',
+    origin: [
+      'https://graduation-project-frontend-futt.onrender.com',
+      'https://ci-cd-tests-one.vercel.app',
+    ],
   });
 
   // Global validation pipe

@@ -13,3 +13,42 @@
 2025-09-09 01:03:10 - chatbot.api - INFO - main.py:57 - Received chat request: hey (session_id=None)
 2025-09-09 01:03:28 - chatbot.api - INFO - main.py:57 - Received chat request: i want to track an order (session_id=None)
 2025-09-09 01:03:48 - chatbot.api - INFO - main.py:57 - Received chat request: tell me about the rug (session_id=None)
+2025-09-09 15:37:58 - chatbot.api - INFO - main.py:56 - Welcome endpoint called
+2025-09-09 15:38:32 - chatbot.api - INFO - main.py:123 - Sending customer details to n8n: {'name': 'ermias', 'phone': 'testing', 'email': 'his site', 'product': 'string', 'location': 'string', 'date': '2025-09-09T15:38:32.721094'}
+2025-09-09 15:44:55 - chatbot.api - INFO - main.py:56 - Welcome endpoint called
+2025-09-09 15:51:59 - chatbot.api - INFO - main.py:56 - Welcome endpoint called
+2025-09-09 15:52:09 - chatbot.api - INFO - main.py:56 - Welcome endpoint called
+2025-09-09 15:52:35 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'trial', 'product_description': 'new', 'date': '2025-09-09T15:52:35.815408'}
+2025-09-09 15:52:37 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/product-info
+2025-09-09 15:57:54 - chatbot.api - INFO - main.py:56 - Welcome endpoint called
+2025-09-09 15:58:03 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T15:58:03.219780'}
+2025-09-09 15:58:04 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/product-info
+2025-09-09 15:58:20 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T15:58:20.132466'}
+2025-09-09 15:58:20 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/product-info
+2025-09-09 15:58:24 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T15:58:24.095984'}
+2025-09-09 15:58:24 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/product-info
+2025-09-09 16:00:27 - chatbot.api - INFO - main.py:56 - Welcome endpoint called
+2025-09-09 16:00:47 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'hey', 'product_description': 'hey', 'date': '2025-09-09T16:00:47.651729'}
+2025-09-09 16:01:13 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'hey', 'product_description': 'hey', 'date': '2025-09-09T16:01:13.942137'}
+2025-09-09 16:03:51 - chatbot.api - INFO - main.py:56 - Welcome endpoint called
+2025-09-09 16:04:04 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T16:04:04.422185'}
+2025-09-09 16:04:26 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T16:04:26.037311'}
+2025-09-09 16:06:51 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T16:06:51.532945'}
+2025-09-09 16:06:51 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: HTTPSConnectionPool(host='directedjeremiah.app.n8n.cloud', port=443): Max retries exceeded with url: /webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000013E057E8410>: Failed to resolve 'directedjeremiah.app.n8n.cloud' ([Errno 11001] getaddrinfo failed)"))
+2025-09-09 19:19:54 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T19:19:54.703755'}
+2025-09-09 19:19:55 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8
+2025-09-09 19:24:59 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T19:24:59.646051'}
+2025-09-09 19:25:01 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8
+2025-09-09 19:28:45 - chatbot.api - INFO - main.py:56 - Welcome endpoint called
+2025-09-09 19:28:57 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T19:28:57.484888'}
+2025-09-09 19:28:58 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8
+2025-09-09 19:31:39 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T19:31:39.407886'}
+2025-09-09 19:31:54 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T19:31:54.989648'}
+2025-09-09 19:38:06 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T19:38:06.408282'}
+2025-09-09 19:39:56 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T19:39:56.150744'}
+2025-09-09 19:40:17 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T19:40:17.131564'}
+2025-09-09 19:45:44 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T19:45:44.187492'}
+2025-09-09 19:49:08 - chatbot.api - INFO - main.py:126 - Sending customer details to n8n: {'name': 'string', 'phone': 'string', 'email': 'string', 'product': 'string', 'location': 'string', 'date': '2025-09-09T19:49:08.353610'}
+2025-09-09 20:09:44 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T20:09:44.445913'}
+2025-09-09 20:11:30 - chatbot.api - INFO - main.py:126 - Sending customer details to n8n: {'name': 'string', 'phone': 'string', 'email': 'string', 'product': 'string', 'location': 'string', 'date': '2025-09-09T20:11:30.270788'}
+2025-09-09 20:13:37 - chatbot.api - INFO - main.py:126 - Sending customer details to n8n: {'name': 'string', 'phone': 'string', 'email': 'string', 'product': 'string', 'location': 'string', 'date': '2025-09-09T20:13:37.541458'}

@@ -1,0 +1,8 @@
+2025-09-09 15:52:37 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/product-info
+2025-09-09 15:58:04 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/product-info
+2025-09-09 15:58:20 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/product-info
+2025-09-09 15:58:24 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/product-info
+2025-09-09 16:06:51 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: HTTPSConnectionPool(host='directedjeremiah.app.n8n.cloud', port=443): Max retries exceeded with url: /webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000013E057E8410>: Failed to resolve 'directedjeremiah.app.n8n.cloud' ([Errno 11001] getaddrinfo failed)"))
+2025-09-09 19:19:55 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8
+2025-09-09 19:25:01 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8
+2025-09-09 19:28:58 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8

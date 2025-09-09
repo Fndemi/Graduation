@@ -44,6 +44,34 @@ def send_customer_details(name: str, phone: str, email: str, product: str, locat
         return "Error: Request to n8n workflow timed out. The workflow may still be processing."
     except requests.exceptions.RequestException as e:
         return f"Error: Failed to send customer details to n8n workflow. Details: {e}"
+    
+N8N_PRODUCT_WEBHOOK_URL = "https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8"
+
+@tool
+def send_product_info(product_name: str, product_description: str) -> str:
+    """
+    Sends product information to a separate n8n workflow.
+
+    Args:
+        product_name: Name of the product.
+        product_description: Description of the product.
+    """
+    payload = {
+        "product_name": product_name,
+        "product_description": product_description,
+        "date": datetime.now().isoformat()
+    }
+
+    try:
+        print(f"Sending payload to {N8N_PRODUCT_WEBHOOK_URL}: {payload}")
+        response = requests.post(N8N_PRODUCT_WEBHOOK_URL, json=payload, timeout=5)
+        response.raise_for_status()
+        response_data = response.json()
+        return f"Successfully sent product info. n8n response: {json.dumps(response_data)}"
+    except requests.exceptions.Timeout:
+        return "Error: Request timed out."
+    except requests.exceptions.RequestException as e:
+        return f"Error: Failed to send product info. Details: {e}"
 
 if __name__ == '__main__':
     print("Testing sending customer details to workflow:")

@@ -1,4 +1,3 @@
-// lib/notifications-api.ts
 import { apiCall } from './auth';
 
 export type Notification = {
@@ -17,7 +16,7 @@ export async function fetchNotifications(userId: string): Promise<Notification[]
     const data = await apiCall(`/notifications/user/${userId}`, {
       method: 'GET',
     });
-    return data;
+    return data as Notification[]; // Type assertion
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Failed to fetch notifications';
     throw new Error(errorMessage);

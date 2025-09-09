@@ -12,8 +12,8 @@ import { useAuth } from './authContext';
 import { apiCall } from '../lib/auth';
 
 // Define the type for a product
-interface Product {
-  _id: string; // Use _id to match your old wishlist page
+export interface Product {
+  _id: string;
   name: string;
   price: number;
   category: string;
@@ -23,10 +23,10 @@ interface Product {
   initialPrice?: number;
 }
 
-// Define the shape of a wishlist item (just the product)
+// Wishlist item type
 export type WishlistItem = Product;
 
-// Define the shape of the context's value
+// Context value type
 interface WishlistContextType {
   wishlist: WishlistItem[];
   loading: boolean;
@@ -51,19 +51,19 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Function to fetch the wishlist
+  // Fetch wishlist
   const fetchWishlist = async () => {
     if (!user) {
-      setWishlist([]); // Clear wishlist if user is logged out
+      setWishlist([]);
       setLoading(false);
       return;
     }
 
     setLoading(true);
     try {
-      // apiCall returns the parsed JSON directly, not a Response object
       const data = await apiCall('/wishlist');
-      setWishlist(data);
+      // Assert the type
+      setWishlist(data as WishlistItem[]);
     } catch (error) {
       console.error('Failed to fetch wishlist:', error);
       toast.error('Failed to load wishlist. Please try again.');
@@ -73,14 +73,12 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Effect to fetch wishlist whenever the user or auth state changes
   useEffect(() => {
     if (!authLoading) {
       fetchWishlist();
     }
   }, [user, authLoading]);
 
-  // Toggle a product in the wishlist (add or remove)
   const toggleWishlist = async (productId: string) => {
     if (!user) {
       toast.error('Please log in to manage your wishlist.');
@@ -89,11 +87,10 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
 
     setLoading(true);
     try {
-      // apiCall returns the parsed JSON directly, not a Response object
       const updatedWishlist = await apiCall(`/wishlist/${productId}`, {
         method: 'POST',
       });
-      setWishlist(updatedWishlist);
+      setWishlist(updatedWishlist as WishlistItem[]); // <-- type assertion
       toast.success(
         isWishlisted(productId)
           ? 'Item removed from wishlist.'
@@ -111,7 +108,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
     return wishlist.some((item) => item._id === productId);
   };
 
-  const value = {
+  const value: WishlistContextType = {
     wishlist,
     loading,
     toggleWishlist,

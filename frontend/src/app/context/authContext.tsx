@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { useRouter } from 'next/navigation';
 import { apiCall } from '../lib/auth';
 
-// Enhanced user profile interface
+// User profile interface
 export interface UserProfile {
   _id: string;
   name: string;
@@ -12,34 +12,26 @@ export interface UserProfile {
   role: 'buyer' | 'seller';
 }
 
-// Enhanced auth state interface
+// Auth state interface
 interface AuthState {
   isAuthenticated: boolean;
   userId: string | null;
   userProfile: UserProfile | null;
 }
 
-// Enhanced context interface
+// Auth context interface
 interface AuthContextType {
   user: AuthState | null;
   loading: boolean;
   error: string | null;
-  
-  // Auth methods
+
   login: (email: string, password: string) => Promise<void>;
-  signup: (userData: { 
-    name: string; 
-    email: string; 
-    password: string; 
-    role: 'buyer' | 'seller'; 
-  }) => Promise<void>;
+  signup: (userData: { name: string; email: string; password: string; role: 'buyer' | 'seller' }) => Promise<void>;
   logout: () => void;
-  
-  // Profile methods
+
   getUserProfile: () => Promise<UserProfile | null>;
-  updateUserProfile: (data: Partial<Pick<UserProfile, "name" | "email" | "role">>) => Promise<void>;
-  
-  // Utility methods
+  updateUserProfile: (data: Partial<Pick<UserProfile, 'name' | 'email' | 'role'>>) => Promise<void>;
+
   clearError: () => void;
   getAuthToken: () => string | null;
 }
@@ -48,9 +40,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === null) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
 
@@ -60,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  // Initialize auth state from localStorage
+  // Initialize auth state
   useEffect(() => {
     const initializeAuth = async () => {
       try {
@@ -68,16 +58,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
 
         if (accessToken && userId) {
-          // Try to fetch user profile to verify token is still valid
           try {
             const profile = await fetchUserProfile();
-            setUser({ 
-              isAuthenticated: true, 
-              userId,
-              userProfile: profile 
-            });
-          } catch (err) {
-            // Token might be invalid, clear storage
+            setUser({ isAuthenticated: true, userId, userProfile: profile });
+          } catch {
             clearAuthStorage();
             setUser(null);
           }
@@ -95,7 +79,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     initializeAuth();
   }, []);
 
-  // Helper function to clear auth storage
   const clearAuthStorage = () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('accessToken');
@@ -104,25 +87,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Helper function to fetch user profile
+  // Fetch user profile with typed response
   const fetchUserProfile = async (): Promise<UserProfile> => {
-    const data = await apiCall('/auth/me', {
-      method: 'GET',
-    });
-    return data;
+    const data = await apiCall('/auth/me', { method: 'GET' });
+    return data as UserProfile; // <-- type assertion fixes TS error
   };
 
-  // Clear error helper
-  const clearError = () => {
-    setError(null);
-  };
+  const clearError = () => setError(null);
 
-  // Get current auth token
   const getAuthToken = (): string | null => {
     return typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
   };
 
-  // Login method
   const login = async (email: string, password: string): Promise<void> => {
     setLoading(true);
     setError(null);
@@ -130,7 +106,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const data = await apiCall('/auth/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
-      });
+      }) as { accessToken: string; refreshToken: string; userId: string };
 
       if (typeof window !== 'undefined') {
         localStorage.setItem('accessToken', data.accessToken);
@@ -138,32 +114,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem('userId', data.userId);
       }
 
-      // Fetch user profile after successful login
       const profile = await fetchUserProfile();
-      
-      setUser({ 
-        isAuthenticated: true, 
-        userId: data.userId,
-        userProfile: profile 
-      });
-      
+      setUser({ isAuthenticated: true, userId: data.userId, userProfile: profile });
       router.push('/');
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Login failed';
-      setError(errorMessage);
-      throw err; // Re-throw for component handling
+      const msg = err instanceof Error ? err.message : 'Login failed';
+      setError(msg);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // Signup method
-  const signup = async (userData: {
-    name: string;
-    email: string;
-    password: string;
-    role: 'buyer' | 'seller';
-  }): Promise<void> => {
+  const signup = async (userData: { name: string; email: string; password: string; role: 'buyer' | 'seller' }): Promise<void> => {
     setLoading(true);
     setError(null);
     try {
@@ -171,68 +134,50 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         method: 'POST',
         body: JSON.stringify(userData),
       });
-      // Note: After signup, user typically needs to login separately
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Signup failed';
-      setError(errorMessage);
+      const msg = err instanceof Error ? err.message : 'Signup failed';
+      setError(msg);
       throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // Get user profile method
   const getUserProfile = async (): Promise<UserProfile | null> => {
-    if (!user?.isAuthenticated) {
-      return null;
-    }
-
+    if (!user?.isAuthenticated) return null;
     try {
       setError(null);
       const profile = await fetchUserProfile();
-      
-      // Update user state with fresh profile data
       setUser(prev => prev ? { ...prev, userProfile: profile } : null);
-      
       return profile;
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch profile';
-      setError(errorMessage);
+      const msg = err instanceof Error ? err.message : 'Failed to fetch profile';
+      setError(msg);
       return null;
     }
   };
 
-  // Update user profile method
-  const updateUserProfile = async (data: Partial<Pick<UserProfile, "name" | "email" | "role">>): Promise<void> => {
-    if (!user?.isAuthenticated) {
-      throw new Error('Not authenticated');
-    }
-
+  const updateUserProfile = async (data: Partial<Pick<UserProfile, 'name' | 'email' | 'role'>>): Promise<void> => {
+    if (!user?.isAuthenticated) throw new Error('Not authenticated');
     try {
       setError(null);
       setLoading(true);
-      
+
       const updatedProfile = await apiCall('/auth/me', {
         method: 'PUT',
         body: JSON.stringify(data),
-      });
+      }) as UserProfile;
 
-      // Update user state with updated profile
-      setUser(prev => prev ? { 
-        ...prev, 
-        userProfile: updatedProfile.user || updatedProfile 
-      } : null);
-      
+      setUser(prev => prev ? { ...prev, userProfile: updatedProfile } : null);
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to update profile';
-      setError(errorMessage);
+      const msg = err instanceof Error ? err.message : 'Failed to update profile';
+      setError(msg);
       throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // Logout method
   const logout = () => {
     clearAuthStorage();
     setUser(null);
@@ -240,18 +185,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     router.push('/login');
   };
 
-  const value: AuthContextType = {
-    user,
-    loading,
-    error,
-    login,
-    signup,
-    logout,
-    getUserProfile,
-    updateUserProfile,
-    clearError,
-    getAuthToken,
-  };
+  const value: AuthContextType = { user, loading, error, login, signup, logout, getUserProfile, updateUserProfile, clearError, getAuthToken };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

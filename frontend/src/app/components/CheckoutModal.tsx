@@ -3,13 +3,20 @@
 import { checkoutCart } from '../lib/cart-api';
 import toast from 'react-hot-toast'; // Import toast
 
-export default function CheckoutModal({ isOpen, onClose, onCheckoutSuccess }) {
+interface CheckoutModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onCheckoutSuccess: () => void;
+}
+
+export default function CheckoutModal({ isOpen, onClose, onCheckoutSuccess }: CheckoutModalProps) {
   if (!isOpen) return null;
 
   const handleConfirmCheckout = async () => {
     try {
       await checkoutCart();
       onCheckoutSuccess();
+      toast.success("Checkout successful!");
     } catch (error) {
       console.error("Checkout failed:", error);
       toast.error("Checkout failed. Please try again.");

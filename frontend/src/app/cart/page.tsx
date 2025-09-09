@@ -2,16 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  fetchCart,
-  removeFromCart,
-  updateCartItem,
-} from "../lib/cart-api";
+import { fetchCart, removeFromCart, updateCartItem, CartItem } from "../lib/cart-api";
 import CheckoutModal from '../components/CheckoutModal';
-import toast, { Toaster } from 'react-hot-toast'; // Import toast and Toaster
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [updatingProductId, setUpdatingProductId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -114,7 +110,7 @@ export default function CartPage() {
 
   return (
     <div className="max-w-5xl mx-auto py-10 px-4 mt-11">
-      <Toaster /> {/* Add the Toaster component */}
+      <Toaster />
       <h1 className="text-3xl font-bold mb-8">My Cart</h1>
       <div className="space-y-6">
         {cartItems.map((item, index) => {
@@ -122,7 +118,7 @@ export default function CartPage() {
 
           if (!product || typeof product === 'string') {
             return (
-              <div key={`error-${index}`} className="text-red-500 p-4 border border-red-300 rounded">
+              <div key={index} className="text-red-500 p-4 border border-red-300 rounded">
                 Error: Product data is missing or invalid.
               </div>
             );
@@ -134,7 +130,7 @@ export default function CartPage() {
 
           return (
             <div
-              key={item._id}
+              key={product._id || index}
               className="flex items-center gap-4 border-b border-gray-700 pb-4"
             >
               <Image
@@ -150,9 +146,7 @@ export default function CartPage() {
               />
               <div className="flex-1">
                 <h2 className="text-xl font-semibold">{product.name}</h2>
-                <p className="text-gray-400">
-                  {product.category} • {product.niche}
-                </p>
+                <p className="text-gray-400">{product.category} • {product.niche}</p>
                 <p className="text-green-400 font-bold mt-1">
                   Ksh {price.toLocaleString()} x {item.quantity} = Ksh {itemTotal.toLocaleString()}
                 </p>

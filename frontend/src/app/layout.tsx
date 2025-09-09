@@ -7,8 +7,8 @@ import { AuthProvider } from './context/authContext'; // 🆕 Import the AuthPro
 import ChatbotButton from './components/ChatbotButton';
 
 export const metadata: Metadata = {
-  title: 'Your App Name',
-  description: 'Your app description',
+  title: 'The Luxe',
+  description: ' E-commerce application designed specifically for the home decor market',
 };
 
 export default function RootLayout({

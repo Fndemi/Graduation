@@ -205,11 +205,6 @@ NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloudinary-name
 npm run dev
 ```
 
-### 4. **Access the Application**
-- **Frontend**: [http://localhost:3001](http://localhost:3001)
-- **Backend API**: [http://localhost:3000](http://localhost:3000)
-- **API Documentation**: [http://localhost:3000/api](http://localhost:3000/api)
-
 ---
 
 ## 📚 API Documentation

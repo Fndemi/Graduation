@@ -52,3 +52,37 @@
 2025-09-09 20:09:44 - chatbot.api - INFO - main.py:152 - Sending product info to n8n: {'product_name': 'string', 'product_description': 'string', 'date': '2025-09-09T20:09:44.445913'}
 2025-09-09 20:11:30 - chatbot.api - INFO - main.py:126 - Sending customer details to n8n: {'name': 'string', 'phone': 'string', 'email': 'string', 'product': 'string', 'location': 'string', 'date': '2025-09-09T20:11:30.270788'}
 2025-09-09 20:13:37 - chatbot.api - INFO - main.py:126 - Sending customer details to n8n: {'name': 'string', 'phone': 'string', 'email': 'string', 'product': 'string', 'location': 'string', 'date': '2025-09-09T20:13:37.541458'}
+2025-09-09 21:02:42 - chatbot.api - INFO - main.py:51 - Welcome endpoint called
+2025-09-09 21:03:07 - chatbot.api - INFO - main.py:57 - Received chat request: I want to return a product (session_id=string)
+2025-09-09 21:03:24 - chatbot.api - INFO - main.py:57 - Received chat request: Ermias (session_id=string)
+2025-09-09 21:03:40 - chatbot.api - INFO - main.py:57 - Received chat request: ermiasmollag@gmail.com (session_id=string)
+2025-09-09 21:03:59 - chatbot.api - INFO - main.py:57 - Received chat request: 0938299208 (session_id=string)
+2025-09-09 21:04:19 - chatbot.api - INFO - main.py:57 - Received chat request: ethiopia (session_id=string)
+2025-09-09 21:04:30 - chatbot.api - INFO - main.py:57 - Received chat request: ethiopia (session_id=string)
+2025-09-09 21:04:53 - chatbot.api - INFO - main.py:57 - Received chat request: Ethiopia, addis ababa (session_id=string)
+2025-09-09 21:05:46 - chatbot.api - INFO - main.py:51 - Welcome endpoint called
+2025-09-09 21:06:00 - chatbot.api - INFO - main.py:57 - Received chat request: return  (session_id=string)
+2025-09-09 21:06:10 - chatbot.api - INFO - main.py:57 - Received chat request: return a product (session_id=string)
+2025-09-09 21:06:31 - chatbot.api - INFO - main.py:57 - Received chat request: I want to return a product (session_id=string)
+2025-09-09 21:06:49 - chatbot.api - INFO - main.py:57 - Received chat request: chair (session_id=string)
+2025-09-09 21:07:32 - chatbot.api - INFO - main.py:51 - Welcome endpoint called
+2025-09-09 21:08:01 - chatbot.api - INFO - main.py:57 - Received chat request: I want to return bookshelf (session_id=string)
+2025-09-09 21:08:14 - chatbot.api - INFO - main.py:57 - Received chat request: ermias (session_id=string)
+2025-09-09 21:08:36 - chatbot.api - INFO - main.py:57 - Received chat request: ermiasmollag@gmail.com (session_id=string)
+2025-09-09 21:08:39 - chatbot.api - INFO - main.py:57 - Received chat request: ermiasmollag@gmail.com (session_id=string)
+2025-09-09 21:08:49 - chatbot.api - INFO - main.py:57 - Received chat request: 023095 (session_id=string)
+2025-09-09 21:09:05 - chatbot.api - INFO - main.py:57 - Received chat request: ethi (session_id=string)
+2025-09-09 21:11:01 - chatbot.api - INFO - main.py:57 - Received chat request: I want to return a book (session_id=string)
+2025-09-09 21:11:37 - chatbot.api - INFO - main.py:51 - Welcome endpoint called
+2025-09-09 21:11:57 - chatbot.api - INFO - main.py:57 - Received chat request: I want to return a book shelf (session_id=string)
+2025-09-09 21:12:10 - chatbot.api - INFO - main.py:57 - Received chat request: boo (session_id=string)
+2025-09-09 21:12:30 - chatbot.api - INFO - main.py:57 - Received chat request: ermiasmollag@gmail.com (session_id=string)
+2025-09-09 21:12:40 - chatbot.api - INFO - main.py:57 - Received chat request: 7349875 (session_id=string)
+2025-09-09 21:12:48 - chatbot.api - INFO - main.py:57 - Received chat request: ethiopia (session_id=string)
+2025-09-09 21:28:17 - chatbot.api - INFO - main.py:51 - Welcome endpoint called
+2025-09-09 21:28:35 - chatbot.api - INFO - main.py:57 - Received chat request: I want to return a bookshelf (session_id=string)
+2025-09-09 21:28:48 - chatbot.api - INFO - main.py:57 - Received chat request: Ermias Molla (session_id=string)
+2025-09-09 21:29:08 - chatbot.api - INFO - main.py:57 - Received chat request: ermiasmolla00@gmail.com (session_id=string)
+2025-09-09 21:29:23 - chatbot.api - INFO - main.py:57 - Received chat request: 8797 (session_id=string)
+2025-09-09 21:29:38 - chatbot.api - INFO - main.py:57 - Received chat request: 87342397 (session_id=string)
+2025-09-09 21:29:53 - chatbot.api - INFO - main.py:57 - Received chat request: okay I wanna return a product  (session_id=string)

@@ -6,3 +6,167 @@
 2025-09-09 19:19:55 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8
 2025-09-09 19:25:01 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8
 2025-09-09 19:28:58 - chatbot.api - ERROR - main.py:164 - Failed to send to n8n: 404 Client Error: Not Found for url: https://directedjeremiah.app.n8n.cloud/webhook/550cd07c-bd08-4733-98fa-ab0ba66fcda8
+2025-09-09 21:04:23 - chatbot.main - ERROR - main.py:89 - Error in chat endpoint: Got unsupported early_stopping_method `generate`
+Traceback (most recent call last):
+  File "C:\Users\Well come\DirectEd\Module_5\New folder\E-Commerce\chatbot_backend\src\chatbot_backend\main.py", line 64, in chat_with_agent
+    result = agent_executor.invoke({
+        "input": request.query,
+        "chat_history": chat_history
+    })
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\chains\base.py", line 165, in invoke
+    self._call(inputs, run_manager=run_manager)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 1652, in _call
+    output = self._action_agent.return_stopped_response(
+        self.early_stopping_method,
+        intermediate_steps,
+        **inputs,
+    )
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 312, in return_stopped_response
+    raise ValueError(msg)
+ValueError: Got unsupported early_stopping_method `generate`
+2025-09-09 21:04:34 - chatbot.main - ERROR - main.py:89 - Error in chat endpoint: Got unsupported early_stopping_method `generate`
+Traceback (most recent call last):
+  File "C:\Users\Well come\DirectEd\Module_5\New folder\E-Commerce\chatbot_backend\src\chatbot_backend\main.py", line 64, in chat_with_agent
+    result = agent_executor.invoke({
+        "input": request.query,
+        "chat_history": chat_history
+    })
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\chains\base.py", line 165, in invoke
+    self._call(inputs, run_manager=run_manager)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 1652, in _call
+    output = self._action_agent.return_stopped_response(
+        self.early_stopping_method,
+        intermediate_steps,
+        **inputs,
+    )
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 312, in return_stopped_response
+    raise ValueError(msg)
+ValueError: Got unsupported early_stopping_method `generate`
+2025-09-09 21:04:56 - chatbot.main - ERROR - main.py:89 - Error in chat endpoint: Got unsupported early_stopping_method `generate`
+Traceback (most recent call last):
+  File "C:\Users\Well come\DirectEd\Module_5\New folder\E-Commerce\chatbot_backend\src\chatbot_backend\main.py", line 64, in chat_with_agent
+    result = agent_executor.invoke({
+        "input": request.query,
+        "chat_history": chat_history
+    })
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\chains\base.py", line 165, in invoke
+    self._call(inputs, run_manager=run_manager)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 1652, in _call
+    output = self._action_agent.return_stopped_response(
+        self.early_stopping_method,
+        intermediate_steps,
+        **inputs,
+    )
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 312, in return_stopped_response
+    raise ValueError(msg)
+ValueError: Got unsupported early_stopping_method `generate`
+2025-09-09 21:06:15 - chatbot.main - ERROR - main.py:89 - Error in chat endpoint: Got unsupported early_stopping_method `generate`
+Traceback (most recent call last):
+  File "C:\Users\Well come\DirectEd\Module_5\New folder\E-Commerce\chatbot_backend\src\chatbot_backend\main.py", line 64, in chat_with_agent
+    result = agent_executor.invoke({
+        "input": request.query,
+        "chat_history": chat_history
+    })
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\chains\base.py", line 165, in invoke
+    self._call(inputs, run_manager=run_manager)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 1652, in _call
+    output = self._action_agent.return_stopped_response(
+        self.early_stopping_method,
+        intermediate_steps,
+        **inputs,
+    )
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 312, in return_stopped_response
+    raise ValueError(msg)
+ValueError: Got unsupported early_stopping_method `generate`
+2025-09-09 21:06:54 - chatbot.main - ERROR - main.py:89 - Error in chat endpoint: Got unsupported early_stopping_method `generate`
+Traceback (most recent call last):
+  File "C:\Users\Well come\DirectEd\Module_5\New folder\E-Commerce\chatbot_backend\src\chatbot_backend\main.py", line 64, in chat_with_agent
+    result = agent_executor.invoke({
+        "input": request.query,
+        "chat_history": chat_history
+    })
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\chains\base.py", line 165, in invoke
+    self._call(inputs, run_manager=run_manager)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 1652, in _call
+    output = self._action_agent.return_stopped_response(
+        self.early_stopping_method,
+        intermediate_steps,
+        **inputs,
+    )
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 312, in return_stopped_response
+    raise ValueError(msg)
+ValueError: Got unsupported early_stopping_method `generate`
+2025-09-09 21:29:39 - chatbot.main - ERROR - main.py:89 - Error in chat endpoint: Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.
+Traceback (most recent call last):
+  File "C:\Users\Well come\DirectEd\Module_5\New folder\E-Commerce\chatbot_backend\src\chatbot_backend\main.py", line 64, in chat_with_agent
+    result = agent_executor.invoke({
+        "input": request.query,
+        "chat_history": chat_history
+    })
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\chains\base.py", line 165, in invoke
+    self._call(inputs, run_manager=run_manager)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 1625, in _call
+    next_step_output = self._take_next_step(
+        name_to_tool_map,
+    ...<3 lines>...
+        run_manager=run_manager,
+    )
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 1325, in _take_next_step
+    list(
+    ~~~~^
+        self._iter_next_step(
+        ^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        ),
+        ^^
+    ),
+    ^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 1352, in _iter_next_step
+    output = self._action_agent.plan(
+        intermediate_steps,
+        callbacks=run_manager.get_child() if run_manager else None,
+        **inputs,
+    )
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain\agents\agent.py", line 573, in plan
+    for chunk in self.runnable.stream(inputs, config={"callbacks": callbacks}):
+                 ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3473, in stream
+    yield from self.transform(iter([input]), config, **kwargs)
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3459, in transform
+    yield from self._transform_stream_with_config(
+    ...<4 lines>...
+    )
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 2233, in _transform_stream_with_config
+    chunk: Output = context.run(next, iterator)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3421, in _transform
+    yield from final_pipeline
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 1442, in transform
+    for ichunk in input:
+                  ^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 5711, in transform
+    yield from self.bound.transform(
+    ...<3 lines>...
+    )
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 1460, in transform
+    yield from self.stream(final, config, **kwargs)
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 520, in stream
+    for chunk in self._stream(input_messages, stop=stop, **kwargs):
+                 ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_groq\chat_models.py", line 563, in _stream
+    for chunk in self.client.create(messages=message_dicts, **params):
+                 ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\groq\_streaming.py", line 46, in __iter__
+    for item in self._iterator:
+                ^^^^^^^^^^^^^^
+  File "C:\Users\Well come\AppData\Local\Programs\Python\Python313\Lib\site-packages\groq\_streaming.py", line 91, in __stream__
+    raise APIError(
+    ...<3 lines>...
+    )
+groq.APIError: Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.
